@@ -267,7 +267,7 @@
   </div>
   <button class="ghost" id="swapBtn" title="Put your resume on the other side">⇆ Swap sides</button>
   <label class="holdpos" title="On: panels keep their own size and trade places. Off: the left/right sizes stay put and your content moves into the other-sized slot.">
-    <input type="checkbox" id="holdPos"> Hold Swap Position
+    <input type="checkbox" id="holdPos"> Hold Page Size
   </label>
   <button class="ghost" id="helpBtn">🪟 Help overlay</button>
 </header>
@@ -718,10 +718,24 @@
     if(val("#gpa")) L.push("GPA: "+val("#gpa"));
     L.push("");
     L.push("Skills");
-    L.push(val("#skills"));
+    L.push(cleanSkills($("#skills").value));
     return L.join("\n");
   }
   function val(s){ return collapse($(s).value); }
+  // skills -> strict "word, word" list (the comma shape the probes proved Workday reads).
+  // Separators (| ; newlines, bullets, PARENTHESES, and SPACED dashes) become commas; every other
+  // symbol becomes a space so words don't mash (Audio/Video -> "Audio Video"); the ampersand is kept
+  // (P&L, R&D). Letters/numbers/spaces stay. + . / - etc. are dropped to spaces.
+  function cleanSkills(raw){
+    return (raw||"")
+      .replace(/\s+[-\u2013\u2014]\s+/g, ",")   // a spaced dash (-, en, em) = a separator
+      .replace(/[|;()•·▪◦‣∙\r\n]+/g, ",")    // pipes, semicolons, parens, bullets, newlines
+      .replace(/[^A-Za-z0-9 ,&]+/g, " ")                                  // every other symbol -> space (keep &)
+      .split(",")
+      .map(s => s.replace(/\s+/g, " ").trim())
+      .filter(Boolean)
+      .join(", ");
+  }
 
   $("#renderBtn").onclick = () => {
     const text = render();
