@@ -372,10 +372,10 @@
     <div id="outWrap" style="display:none">
       <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
         <button class="primary" id="dlDocx">⬇️ Download .docx</button>
-        <button class="ghost" id="dlPdf">⬇️ Download .pdf</button>
         <button class="ghost" id="copyBtn">📋 Copy</button>
         <button class="ghost" id="downloadBtn">⬇️ .txt</button>
       </div>
+      <div class="advise" style="margin-top:8px">💡 <b>Use the .docx</b> — it's the format Workday autofills from the cleanest, and it loads faster than a PDF. Plain-text (.txt) is here too. (We tried a PDF version as well, but Word parsed more reliably, so we kept it simple.)</div>
       <div id="output"></div>
     </div>
   </section>
@@ -467,9 +467,7 @@
 
 <script src="vendor/pdf.min.js"></script>
 <script src="vendor/mammoth.browser.min.js"></script>
-<script src="vendor/jszip.min.js"></script>
-<script src="vendor/jspdf.umd.min.js"></script>
-<script>
+<script src="vendor/jszip.min.js"></script><script>
 (function(){
   "use strict";
   if(window.pdfjsLib){ pdfjsLib.GlobalWorkerOptions.workerSrc = "vendor/pdf.worker.min.js"; }
@@ -752,31 +750,7 @@
     zip.folder("word").file("document.xml", document_xml);
     return zip.generateAsync({type:"blob", mimeType:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"});
   }
-  function buildPdf(text){
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({unit:"pt", format:"letter"});
-    const margin=54, pageH=doc.internal.pageSize.getHeight(), maxW=doc.internal.pageSize.getWidth()-margin*2;
-    const lh=14, paraGap=8;                              // body line height + gap at blank lines
-    const SECTION = /^(My Information|Work Experience|Education|Skills)$/;   // top-level headers
-    const SUBHEAD = /^(Work Experience \d+|Education \d+)$/;                 // per-entry headers
-    let y=margin;
-    text.split("\n").forEach(raw => {
-      if(raw===""){ y += paraGap; return; }              // blank line → spacing, not an empty row
-      let size=10, weight="normal", lead=lh;
-      if(SECTION.test(raw)){ if(y>margin) y+=paraGap; size=13; weight="bold"; lead=lh+5; }
-      else if(SUBHEAD.test(raw)){ size=11; weight="bold"; lead=lh+2; }
-      doc.setFont("helvetica",weight); doc.setFontSize(size);
-      // keep each line as ONE logical line (matches the .docx) -- shrink to fit instead of wrapping,
-      // so Workday can't misread a wrapped bullet as several separate accomplishments
-      const w = doc.getTextWidth(raw);
-      if(w > maxW) doc.setFontSize(Math.max(6, size * maxW / w));
-      if(y > pageH-margin){ doc.addPage(); y=margin; }
-      doc.text(raw, margin, y); y += lead;
-    });
-    return doc;
-  }
   $("#dlDocx").onclick = () => buildDocx(render()).then(b => saveBlob(b, "workday-safe-resume.docx"));
-  $("#dlPdf").onclick  = () => buildPdf(render()).save("workday-safe-resume.pdf");
 
   /* ---------- help center: left page nav + individual pages ---------- */
   // topic copy + example snippets, reused as the individual help pages
