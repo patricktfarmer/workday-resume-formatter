@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workday Resume Formatter</title>
+<meta name="description" content="A free, privacy-first tool that reformats your resume so Workday's autofill reads it cleanly. Everything runs in your browser — nothing leaves your device.">
+<meta name="theme-color" content="#5b8bff">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAABY2lDQ1BrQ0dDb2xvclNwYWNlRGlzcGxheVAzAAAokX2QsUvDUBDGv1aloHUQHRwcMolDlJIKuji0FURxCFXB6pS+pqmQxkeSIgU3/4GC/4EKzm4Whzo6OAiik+jm5KTgouV5L4mkInqP435877vjOCA5bnBu9wOoO75bXMorm6UtJfWMBL0gDObxnK6vSv6uP+P9PvTeTstZv///jcGK6TGqn5QZxl0fSKjE+p7PJe8Tj7m0FHFLshXyieRyyOeBZ71YIL4mVljNqBC/EKvlHt3q4brdYNEOcvu06WysyTmUE1jEDjxw2DDQhAId2T/8s4G/gF1yN+FSn4UafOrJkSInmMTLcMAwA5VYQ4ZSk3eO7ncX3U+NtYMnYKEjhLiItZUOcDZHJ2vH2tQ8MDIEXLW54RqB1EeZrFaB11NguASM3lDPtlfNauH26Tww8CjE2ySQOgS6LSE+joToHlPzA3DpfAEDp2ITpJYOWwAAAARjSUNQDA0AAW4D4+8AAADqZVhJZk1NACoAAAAIAAYBEgADAAAAAQABAAABGgAFAAAAAQAAAFYBGwAFAAAAAQAAAF4BKAADAAAAAQACAAABMQACAAAABwAAAGaHaQAEAAAAAQAAAG4AAAAAAAAASAAAAAEAAABIAAAAAVBpY2FzYQAAAAeQAAAHAAAABDAyMjCRAQAHAAAABAECAwCgAAAHAAAABDAxMDCgAgAEAAAAAQAAAECgAwAEAAAAAQAAAECkBgADAAAAAQAAAACkIAACAAAAIQAAAMgAAAAAOGVhZTBjNjRlYzIzZGQ0MTAwMDAwMDAwMDAwMDAwMDAAAGUntysAAAAJcEhZcwAACxMAAAsTAQCanBgAAAU1aVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJYTVAgQ29yZSA2LjAuMCI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIgogICAgICAgICAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOnRpZmY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vdGlmZi8xLjAvIj4KICAgICAgICAgPGV4aWY6Q29sb3JTcGFjZT4xPC9leGlmOkNvbG9yU3BhY2U+CiAgICAgICAgIDxleGlmOlBpeGVsWERpbWVuc2lvbj4xMDI0PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6U2NlbmVDYXB0dXJlVHlwZT4wPC9leGlmOlNjZW5lQ2FwdHVyZVR5cGU+CiAgICAgICAgIDxleGlmOkV4aWZWZXJzaW9uPjAyMjA8L2V4aWY6RXhpZlZlcnNpb24+CiAgICAgICAgIDxleGlmOkZsYXNoUGl4VmVyc2lvbj4wMTAwPC9leGlmOkZsYXNoUGl4VmVyc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjEwMjQ8L2V4aWY6UGl4ZWxZRGltZW5zaW9uPgogICAgICAgICA8ZXhpZjpJbWFnZVVuaXF1ZUlEPjhlYWUwYzY0ZWMyM2RkNDEwMDAwMDAwMDAwMDAwMDAwPC9leGlmOkltYWdlVW5pcXVlSUQ+CiAgICAgICAgIDxleGlmOkNvbXBvbmVudHNDb25maWd1cmF0aW9uPgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaT4xPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGk+MjwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpPjM8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaT4wPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC9leGlmOkNvbXBvbmVudHNDb25maWd1cmF0aW9uPgogICAgICAgICA8eG1wOkNyZWF0b3JUb29sPlBpY2FzYTwveG1wOkNyZWF0b3JUb29sPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5p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">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAABY2lDQ1BrQ0dDb2xvclNwYWNlRGlzcGxheVAzAAAokX2QsUvDUBDGv1aloHUQHRwcMolDlJIKuji0FURxCFXB6pS+pqmQxkeSIgU3/4GC/4EKzm4Whzo6OAiik+jm5KTgouV5L4mkInqP435877vjOCA5bnBu9wOoO75bXMorm6UtJfWMBL0gDObxnK6vSv6uP+P9PvTeTstZv///jcGK6TGqn5QZxl0fSKjE+p7PJe8Tj7m0FHFLshXyieRyyOeBZ71YIL4mVljNqBC/EKvlHt3q4brdYNEOcvu06WysyTmUE1jEDjxw2DDQhAId2T/8s4G/gF1yN+FSn4UafOrJkSInmMTLcMAwA5VYQ4ZSk3eO7ncX3U+NtYMnYKEjhLiItZUOcDZHJ2vH2tQ8MDIEXLW54RqB1EeZrFaB11NguASM3lDPtlfNauH26Tww8CjE2ySQOgS6LSE+joToHlPzA3DpfAEDp2ITpJYOWwAAAARjSUNQDA0AAW4D4+8AAADqZVhJZk1NACoAAAAIAAYBEgADAAAAAQABAAABGgAFAAAAAQAAAFYBGwAFAAAAAQAAAF4BKAADAAAAAQACAAABMQACAAAABwAAAGaHaQAEAAAAAQAAAG4AAAAAAAAASAAAAAEAAABIAAAAAVBpY2FzYQAAAAeQAAAHAAAABDAyMjCRAQAHAAAABAECAwCgAAAHAAAABDAxMDCgAgAEAAAAAQAAAECgAwAEAAAAAQAAAECkBgADAAAAAQAAAACkIAACAAAAIQAAAMgAAAAAOGVhZTBjNjRlYzIzZGQ0MTAwMDAwMDAwMDAwMDAwMDAAAGUntysAAAAJcEhZcwAACxMAAAsTAQCanBgAAAU1aVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJYTVAgQ29yZSA2LjAuMCI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIgogICAgICAgICAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOnRpZmY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vdGlmZi8xLjAvIj4KICAgICAgICAgPGV4aWY6Q29sb3JTcGFjZT4xPC9leGlmOkNvbG9yU3BhY2U+CiAgICAgICAgIDxleGlmOlBpeGVsWERpbWVuc2lvbj4xMDI0PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6U2NlbmVDYXB0dXJlVHlwZT4wPC9leGlmOlNjZW5lQ2FwdHVyZVR5cGU+CiAgICAgICAgIDxleGlmOkV4aWZWZXJzaW9uPjAyMjA8L2V4aWY6RXhpZlZlcnNpb24+CiAgICAgICAgIDxleGlmOkZsYXNoUGl4VmVyc2lvbj4wMTAwPC9leGlmOkZsYXNoUGl4VmVyc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjEwMjQ8L2V4aWY6UGl4ZWxZRGltZW5zaW9uPgogICAgICAgICA8ZXhpZjpJbWFnZVVuaXF1ZUlEPjhlYWUwYzY0ZWMyM2RkNDEwMDAwMDAwMDAwMDAwMDAwPC9leGlmOkltYWdlVW5pcXVlSUQ+CiAgICAgICAgIDxleGlmOkNvbXBvbmVudHNDb25maWd1cmF0aW9uPgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaT4xPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGk+MjwvcmRmOmxpPgogICAgICAgICAgICAgICA8cmRmOmxpPjM8L3JkZjpsaT4KICAgICAgICAgICAgICAgPHJkZjpsaT4wPC9yZGY6bGk+CiAgICAgICAgICAgIDwvcmRmOlNlcT4KICAgICAgICAgPC9leGlmOkNvbXBvbmVudHNDb25maWd1cmF0aW9uPgogICAgICAgICA8eG1wOkNyZWF0b3JUb29sPlBpY2FzYTwveG1wOkNyZWF0b3JUb29sPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5p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">
+<!-- social preview (add og:image with the absolute Pages URL once the repo is live) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Workday Resume Formatter">
+<meta property="og:description" content="Reformat your resume so Workday's autofill reads it cleanly — free, and it all stays in your browser.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Workday Resume Formatter">
+<meta name="twitter:description" content="Reformat your resume so Workday's autofill reads it cleanly — free, and it all stays in your browser.">
+<style>
+  :root{
+    --bg:#f4f6f9; --panel:#ffffff; --ink:#1a2230; --muted:#5a6675;
+    --line:#dde3ec; --accent:#2f6df6; --accent-ink:#ffffff;
+    --good:#1f9d63; --warn:#c9772b; --field:#ffffff; --field-line:#c4ccd8;
+    --sheet:rgba(150,205,255,0.14); --sheet-line:rgba(60,130,220,0.55);
+    --note-bg:rgba(255,255,255,0.86); --note-ink:#12324f;
+    --radius:12px; --pad:18px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#11151c; --panel:#1a212c; --ink:#eaeff7; --muted:#9aa7b8;
+      --line:#2a3444; --accent:#5b8bff; --accent-ink:#0b1220;
+      --good:#43c98a; --warn:#e0a45f; --field:#141a23; --field-line:#33405360;
+      --sheet:rgba(70,140,230,0.16); --sheet-line:rgba(120,180,255,0.55);
+      --note-bg:rgba(24,34,48,0.9); --note-ink:#cfe4ff;
+    }
+  }
+  /* ---- three explicit "looks", chosen via the header selector (blue = unselected accent, green = selected/set) ---- */
+  :root[data-theme="light"]{
+    --bg:#ffffff; --panel:#ffffff; --ink:#000000; --muted:#54606e; --line:#dcdcdc;
+    --accent:#1565d8; --accent-ink:#ffffff; --good:#1a8f52; --warn:#b56a1f;
+    --field:#ffffff; --field-line:#b9c0c9;
+    --sheet:rgba(160,205,255,0.16); --sheet-line:rgba(40,110,210,0.5);
+    --note-bg:rgba(255,255,255,0.94); --note-ink:#0f2c49;
+  }
+  :root[data-theme="custom"]{
+    --bg:#1c2029; --panel:#262b35; --ink:#ffffff; --muted:#a3abbb; --line:#333a46;
+    --accent:#5b8bff; --accent-ink:#0b1220; --good:#43c98a; --warn:#e0a45f;
+    --field:#181c24; --field-line:#3c4350;
+    --sheet:rgba(50,62,84,0.55); --sheet-line:rgba(120,150,195,0.5);
+    --note-bg:rgba(28,33,42,0.95); --note-ink:#dbe4f2;
+  }
+  :root[data-theme="dark"]{
+    --bg:#000000; --panel:#121212; --ink:#f4f4f5; --muted:#a1a1aa; --line:#2a2a2a;
+    --accent:#5b8bff; --accent-ink:#0b1220; --good:#43c98a; --warn:#e0a45f;
+    --field:#0c0c0c; --field-line:#33343a;
+    --sheet:rgba(0,0,0,0.55); --sheet-line:rgba(150,150,160,0.5);
+    --note-bg:rgba(18,18,18,0.96); --note-ink:#e6e6ea;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font:17px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    background:var(--bg); color:var(--ink);
+  }
+  header{
+    display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+    padding:16px 22px; background:var(--panel); border-bottom:1px solid var(--line);
+    position:sticky; top:0; z-index:20;
+  }
+  header .brand h1{font-size:20px; margin:0}
+  header .brand p{margin:2px 0 0; color:var(--muted); font-size:14px}
+
+  /* first-load hook banner */
+  #banner{display:flex; align-items:center; justify-content:center; gap:12px; position:relative;
+    background:linear-gradient(90deg, var(--accent), #6f9bff); color:#fff; padding:11px 46px 11px 18px;
+    font-size:15px; text-align:center; animation:bannerIn .4s ease}
+  #banner.hide{display:none}
+  #banner .bannerlink{background:#fff; color:var(--accent); border:none; border-radius:999px;
+    padding:5px 15px; font:inherit; font-weight:700; cursor:pointer; white-space:nowrap}
+  #banner .bannerlink:hover{filter:brightness(.96)}
+  #banner .bannerx{position:absolute; right:12px; top:50%; transform:translateY(-50%); background:transparent;
+    border:none; color:#fff; font-size:22px; line-height:1; cursor:pointer; padding:2px 8px; opacity:.85}
+  #banner .bannerx:hover{opacity:1}
+  @keyframes bannerIn{from{transform:translateY(-100%); opacity:0} to{transform:translateY(0); opacity:1}}
+
+  /* footer */
+  #siteFooter{display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap;
+    padding:16px; border-top:1px solid var(--line); color:var(--muted); font-size:13px; text-align:center}
+  #siteFooter .footlink{background:none; border:none; color:var(--accent); font:inherit; cursor:pointer; text-decoration:underline; padding:0}
+  header .spacer{flex:1}
+  /* theme / "look" selector */
+  .themesel{display:inline-flex; border:1px solid var(--field-line); border-radius:999px; overflow:hidden; background:var(--field)}
+  .themesel button{border:none; border-radius:0; background:transparent; color:var(--muted); padding:8px 13px; font-size:14px}
+  .themesel button + button{border-left:1px solid var(--field-line)}
+  .themesel button.active{background:var(--accent); color:var(--accent-ink); font-weight:600}
+  .themesel button:not(.active):hover{color:var(--ink)}
+  .holdpos{display:inline-flex; align-items:center; gap:8px; font:inherit; color:var(--muted);
+    cursor:pointer; user-select:none; border:1px solid var(--field-line); border-radius:10px; padding:10px 14px}
+  .holdpos input{width:auto; margin:0; padding:0; border:none; background:none; accent-color:var(--accent); cursor:pointer}
+  button{font:inherit; cursor:pointer; border-radius:10px; border:1px solid var(--field-line);
+    background:var(--field); color:var(--ink); padding:10px 14px}
+  button.primary{background:var(--accent); color:var(--accent-ink); border-color:transparent; font-weight:600}
+  button.ghost{background:transparent}
+  button:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+
+  main{display:flex; gap:16px; padding:16px; align-items:stretch; min-height:calc(100vh - 74px)}
+  main.reversed{flex-direction:row-reverse}
+  /* draggable splitter -- give one side more room */
+  .divider{flex:0 0 12px; align-self:stretch; cursor:col-resize; border-radius:6px;
+    background:var(--line); position:relative; transition:background .15s; touch-action:none}
+  .divider:hover,.divider.drag{background:var(--accent)}
+  .divider::before{content:""; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:4px; height:42px; border-radius:3px; background:var(--panel); opacity:.85}
+  .pane{flex:1 1 0; background:var(--panel); border:1px solid var(--line);
+    border-radius:var(--radius); padding:var(--pad); min-width:0; display:flex; flex-direction:column}
+  .pane h2{font-size:15px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:0 0 12px}
+
+  /* viewer */
+  .drop{border:2px dashed var(--field-line); border-radius:var(--radius); padding:28px 18px;
+    text-align:center; color:var(--muted); background:var(--field)}
+  .drop.drag{border-color:var(--accent); color:var(--ink)}
+  .drop strong{color:var(--ink)}
+  .viewer-actions{display:flex; gap:8px; margin:12px 0; flex-wrap:wrap}
+  #viewerContent{flex:1; overflow:auto; margin-top:6px; border-radius:8px}
+  #viewerContent pre{white-space:pre-wrap; word-wrap:break-word; font:15px/1.55 ui-monospace,Menlo,monospace; margin:0}
+  #viewerContent .docx{background:var(--field); padding:18px; border-radius:8px}
+  #viewerContent canvas{width:100%; height:auto; display:block; margin:0 0 10px; border:1px solid var(--line); border-radius:6px}
+  /* empty-state "how to use this" shown before a file is loaded */
+  .howto{border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px; background:var(--field)}
+  .howto h3{font-size:16px; margin:0 0 12px; color:var(--ink)}
+  .howto ol{margin:0 0 12px; padding-left:22px}
+  .howto li{margin:0 0 11px; line-height:1.5; color:var(--ink)}
+  .howto li b{color:var(--ink)}
+  .howto .howto-foot{color:var(--muted); font-size:14px; font-style:italic; margin:0 0 6px; border-top:1px solid var(--line); padding-top:12px}
+  .howto .hint{margin-top:0}
+  .psa{margin-top:14px; border:1px solid var(--field-line); border-left:3px solid var(--accent);
+    border-radius:var(--radius); padding:14px 16px; background:var(--field); color:var(--muted);
+    font-size:13.5px; line-height:1.6}
+  .psa b{color:var(--ink)}
+  .psa .why{font-size:13.5px}
+  .hint{color:var(--muted); font-size:13px; margin-top:8px}
+
+  /* form */
+  fieldset{border:1px solid var(--line); border-radius:var(--radius); margin:0 0 16px; padding:14px 16px}
+  legend{font-weight:600; padding:0 6px; font-size:14px}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:10px 14px}
+  .grid .full{grid-column:1/-1}
+  label{display:block; font-size:13px; color:var(--muted); margin:0 0 4px}
+  input,select,textarea{width:100%; font:inherit; padding:11px 12px; border-radius:9px;
+    border:1px solid var(--field-line); background:var(--field); color:var(--ink)}
+  textarea{resize:vertical; min-height:88px}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--accent); outline-offset:1px}
+  select.set{border-color:var(--good); box-shadow:inset 0 0 0 1px var(--good)}
+  input:disabled,select:disabled{opacity:.5; cursor:not-allowed}
+  .emailrow{display:flex; gap:6px; align-items:center; flex-wrap:wrap}
+  .emailrow input{flex:1 1 110px} .emailrow select{flex:1 1 140px} .emailrow .at{color:var(--muted); font-weight:700}
+  .citymsg{display:none; font-size:11px; color:var(--warn); margin-top:3px}
+  .citymsg.show{display:block}
+  .datewrap{display:flex; gap:8px}
+  .datewrap select{flex:2} .datewrap input{flex:1}
+  .checkline{display:flex; align-items:center; gap:9px; margin-top:8px; color:var(--ink); font-size:15px}
+  .checkline input{width:auto}
+  .job{border:1px solid var(--field-line); border-radius:var(--radius); padding:12px 14px; margin-bottom:12px; position:relative}
+  .job .jobhead{display:flex; align-items:center; justify-content:space-between; margin-bottom:8px}
+  .job .jobhead b{font-size:14px}
+  .stat{font-size:12px; color:var(--good); margin-top:6px; min-height:16px}
+  .why{background:none;border:none;color:var(--accent);padding:0;font-size:13px;cursor:pointer;text-decoration:underline}
+  .advise{font-size:12px;color:var(--warn);margin-top:4px}
+  #output{white-space:pre-wrap; font:14px/1.55 ui-monospace,Menlo,monospace; background:var(--field);
+    border:1px solid var(--field-line); border-radius:9px; padding:14px; margin-top:10px; max-height:340px; overflow:auto}
+
+  /* the help center -- left page nav + content, plastic-sheet look */
+  #help{position:fixed; inset:0; z-index:45; display:none; padding:22px 18px;
+    background:var(--sheet); backdrop-filter:blur(3px); overflow:auto}
+  #help.on{display:flex; align-items:flex-start; justify-content:center}
+  #help .frame{display:flex; width:100%; max-width:1040px; max-height:calc(100vh - 44px);
+    background:var(--note-bg); border:1.5px solid var(--sheet-line); border-radius:16px; overflow:hidden;
+    box-shadow:0 26px 70px rgba(20,60,120,.30); backdrop-filter:blur(6px)}
+  #help .nav{flex:0 0 210px; border-right:1px solid var(--sheet-line); padding:14px 10px; overflow:auto; background:rgba(0,0,0,.05)}
+  #help .nav h4{margin:4px 8px 10px; font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted)}
+  #help .nav button{display:block; width:100%; text-align:left; background:transparent; border:none;
+    border-radius:8px; padding:9px 11px; margin:2px 0; color:var(--note-ink); font-size:14px; cursor:pointer}
+  #help .nav button:hover{background:rgba(0,0,0,.07)}
+  #help .nav button.active{background:var(--accent); color:var(--accent-ink); font-weight:600}
+  #help .content{flex:1; min-width:0; padding:20px 26px; overflow:auto; color:var(--note-ink)}
+  #help .content h3{margin:0 0 12px; font-size:20px}
+  #help .content .body{font-size:15px; line-height:1.6}
+  #help .content .tag2{display:inline-block; margin-top:14px; font-size:11px; color:var(--muted); font-style:italic}
+  #help .close{float:right; margin:-2px 0 0 14px}
+  .resume-doc{background:#fbfbf6; color:#20262f; border:1px solid rgba(0,0,0,.10);
+    border-radius:12px; padding:26px 30px; box-shadow:0 22px 60px rgba(10,30,70,.32);
+    font:15px/1.5 ui-serif,Georgia,"Times New Roman",serif}
+  .rsec{font-weight:700; font-size:14px; color:#12324f; margin:17px 0 4px;
+    border-bottom:1px solid rgba(0,0,0,.15); padding-bottom:3px; letter-spacing:.02em}
+  .rline{display:flex; gap:18px; align-items:flex-start; margin:2px 0}
+  .rline .txt{flex:1 1 56%; min-width:0}
+  .rline .note{flex:0 0 38%}
+  .rline .txt .k{color:#5a6675}
+  .hl{background:#ffe27a; box-decoration-break:clone; -webkit-box-decoration-break:clone; border-radius:.2em; padding:.02em .16em}
+  .note{background:#fff; border:1px solid rgba(20,60,120,.25); border-left:4px solid var(--accent);
+    border-radius:9px; padding:8px 11px; font:13px/1.42 system-ui,sans-serif; color:#12324f;
+    box-shadow:0 5px 16px rgba(20,60,120,.16); transform:rotate(-.5deg)}
+  .note.flash{outline:3px solid var(--accent); outline-offset:2px; transform:rotate(0)}
+  .note b{color:#0b2a4a}
+  .note .tag{display:block; font-size:11px; color:#7a8798; margin-top:4px; font-style:italic}
+  @media (max-width:760px){ .rline{flex-direction:column; gap:6px} .rline .note{flex-basis:auto} }
+
+  /* example snippet shown at the top of each help page */
+  .ex{background:#fbfbf6; color:#20262f; border:1px solid rgba(0,0,0,.12); border-radius:9px;
+    padding:12px 14px; margin:0 0 14px; font:14px/1.55 ui-serif,Georgia,"Times New Roman",serif; box-shadow:0 6px 18px rgba(10,30,70,.16)}
+  .ex .k{color:#5a6675}
+  .process{background:#eef4ff; border:1px solid rgba(20,60,120,.2); border-radius:10px; padding:14px 16px; margin-top:16px; color:#1a2740}
+  .process h4{margin:0 0 8px; font-size:14px; color:#12324f}
+  .process ol{margin:0 0 8px; padding-left:20px}
+  .process li{margin:0 0 6px; font-size:14px; line-height:1.5}
+  .process p{margin:0; font-size:13px; font-style:italic; color:#48566b}
+  #help .content .body p{margin:0 0 10px}
+  #help .content .body ol{margin:0 0 10px; padding-left:20px}
+  #help .content .body li{margin:0 0 7px}
+  #help .content .body hr{border:none; border-top:1px solid var(--sheet-line); margin:14px 0}
+
+  @media (max-width:820px){ main{flex-direction:column} main.reversed{flex-direction:column-reverse} .grid{grid-template-columns:1fr} #divider{display:none} #viewerPane,#formPane{flex-grow:1 !important} }
+
+  /* mobile-only notice: on phones the two panes stack top-to-bottom */
+  #mobilenote{display:none}
+  @media (max-width:820px){
+    #mobilenote{display:flex; align-items:center; gap:8px; justify-content:center;
+      padding:10px 16px; background:var(--sheet); border-bottom:1px solid var(--line);
+      color:var(--ink); font-size:13px; line-height:1.45; text-align:center}
+  }
+</style>
+<script>
+  /* set the chosen "look" before first paint so there's no flash */
+  (function(){ try{ document.documentElement.setAttribute("data-theme",
+    localStorage.getItem("wrf-theme") || "custom"); }
+    catch(e){ document.documentElement.setAttribute("data-theme","custom"); } })();
+</script>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <h1>Workday Resume Formatter</h1>
+    <p>The last time you’ll reformat your resume for Workday, we hope : ) !</p>
+  </div>
+  <div class="spacer"></div>
+  <div class="themesel" id="themeSel" role="group" aria-label="Color look">
+    <button type="button" data-theme-choice="light" title="Bright white background, black text">☀️ Light</button>
+    <button type="button" data-theme-choice="custom" title="The custom color scheme">🎨 Custom</button>
+    <button type="button" data-theme-choice="dark" title="Dark background, easy on the eyes">🌙 Dark</button>
+  </div>
+  <button class="ghost" id="swapBtn" title="Put your resume on the other side">⇆ Swap sides</button>
+  <label class="holdpos" title="On: panels keep their own size and trade places. Off: the left/right sizes stay put and your content moves into the other-sized slot.">
+    <input type="checkbox" id="holdPos"> Hold Swap Position
+  </label>
+  <button class="ghost" id="helpBtn">🪟 Help overlay</button>
+</header>
+
+<div id="banner">
+  <span>🤔 Asking “why the hell do I need this?”</span>
+  <button id="bannerGo" class="bannerlink">Click here →</button>
+  <button id="bannerX" class="bannerx" aria-label="Dismiss">×</button>
+</div>
+
+<div id="mobilenote">
+  <span>📱 <b>Works great on your phone</b> — the two panels just stack top-to-bottom instead of side-by-side. Your resume is on top, the form below it. Tap <b>⇆ Swap sides</b> to flip which one is on top.</span>
+</div>
+
+<main id="main">
+  <!-- LEFT: viewer -->
+  <section class="pane" id="viewerPane">
+    <h2>Your resume</h2>
+    <div class="drop" id="drop">
+      <p>📄 <strong>Drop your resume here</strong> or <button class="primary" id="browseBtn" style="padding:6px 12px">Choose file</button></p>
+      <p class="hint">Accepts .pdf, .docx, .txt — your information never leaves your device; it all stays inside your own browser.</p>
+      <input type="file" id="fileInput" accept=".txt,.pdf,.docx" hidden>
+    </div>
+    <div class="note" style="transform:rotate(0);margin-top:10px">💡 <b>Copy whole sections — not line by line.</b> To fill in your Achievements, select the <b>entire</b> bulleted section from your resume and paste it into the Achievements box in one go. Your Skills work the same way. Even if it looks messy or bunched up when you copy it out of a PDF, we clean it up and split it into proper lines for you.</div>
+    <div class="viewer-actions">
+      <button class="ghost" id="pasteToggle">✍️ Paste text instead</button>
+    </div>
+    <textarea id="pasteArea" placeholder="…or paste your whole resume here" style="display:none;min-height:200px"></textarea>
+    <div id="viewerContent">
+      <div class="howto">
+        <h3>How to use this — the two-file trick</h3>
+        <ol>
+          <li><b>Upload the file you make here first.</b> It's built so Workday's parser reads your details correctly and autofills the form — so you're not retyping everything by hand.</li>
+          <li><b>Let it fill the form</b>, then fix anything the drop-downs need (your school, maybe your degree).</li>
+          <li><b>At the end of the work-experience page, Workday shows your uploaded file with a delete option. Delete it and re-upload your nice, human-friendly resume</b> — the one you spent time on. That becomes the copy the recruiter actually reads, and it won't change what was already filled in.</li>
+        </ol>
+        <p class="howto-foot">We know you spent time on your resume — that's what the recruiter gets. This version is just to hand the system your details cleanly and save you the typing.</p>
+        <p class="hint">👉 Load or paste a resume above to preview it here.</p>
+      </div>
+      <div class="psa">
+        <b>PSA:</b> This app was created with privacy first in mind. While it's designed to be fully self-contained — to run within your browser and have none of your information leave your device — we do not know any of the data-collection processes that may happen wherever this copy is hosted. Please take that into consideration when using this software. If you'd feel more comfortable, you can download this page and run it locally on your own device — <button class="why" data-note="offline">here's how →</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider" id="divider" role="separator" aria-label="Drag to resize the two panels"></div>
+
+  <!-- RIGHT: form -->
+  <section class="pane" id="formPane">
+    <h2>Workday-safe form</h2>
+
+    <fieldset>
+      <legend>Your details</legend>
+      <div class="grid">
+        <div><label>First name</label><input id="first"></div>
+        <div><label>Last name</label><input id="last"></div>
+        <div class="full">
+          <span class="advise">No middle-name box — on purpose. <button class="why" data-note="middle">Why?</button></span>
+        </div>
+        <div class="full"><label>Street address</label><input id="street" placeholder="Required by Workday"></div>
+        <div><label>City</label><input id="city"><span class="citymsg">→ set your State separately</span></div>
+        <div><label>State</label><select id="state"></select></div>
+        <div><label>Postal code</label><input id="postal" inputmode="numeric" placeholder="ZIP or ZIP+4"></div>
+        <div><label>Phone</label><input id="phone" inputmode="tel" placeholder="(555) 555-0100"></div>
+        <div class="full"><label>Email</label>
+          <div class="emailrow">
+            <input id="emailLocal" placeholder="your email" autocapitalize="off" autocomplete="off">
+            <span class="at">@</span>
+            <select id="emailProvider"></select>
+            <input id="emailDomain" placeholder="type your domain">
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Work experience</legend>
+      <div id="jobs"></div>
+      <button class="ghost" id="addJob">➕ Add another job</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>Skills <button class="why" data-note="skills">Why required?</button></legend>
+      <textarea id="skills" placeholder="Comma-separated, e.g. Active Directory, Windows Server, DNS"></textarea>
+      <div class="advise">Workday builds your skills itself from your wording — we can’t control what shows up, and it may come back empty or vary. <button class="why" data-note="skills">More</button></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Education</legend>
+      <div class="grid">
+        <div class="full"><label>School or university</label><input id="school">
+          <div class="advise">Type it — Workday won’t autofill schools. <button class="why" data-note="picklist">More</button></div></div>
+        <div><label>Degree</label><input id="degree"><div class="advise">Match the employer’s dropdown wording.</div></div>
+        <div><label>Field of study</label><input id="field"></div>
+        <div><label>From</label><div class="datewrap"><select id="eduFromM"></select><select id="eduFromY"></select></div></div>
+        <div><label>To</label><div class="datewrap"><select id="eduToM"></select><select id="eduToY"></select></div></div>
+        <div><label>GPA (optional)</label><input id="gpa"></div>
+      </div>
+    </fieldset>
+
+    <button class="primary" id="renderBtn" style="font-size:17px;padding:13px 18px">✅ Render Workday-safe resume</button>
+    <div id="outWrap" style="display:none">
+      <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+        <button class="primary" id="dlDocx">⬇️ Download .docx</button>
+        <button class="ghost" id="dlPdf">⬇️ Download .pdf</button>
+        <button class="ghost" id="copyBtn">📋 Copy</button>
+        <button class="ghost" id="downloadBtn">⬇️ .txt</button>
+      </div>
+      <div id="output"></div>
+    </div>
+  </section>
+</main>
+
+<footer id="siteFooter">
+  <span>Free for personal, non-commercial use — please don’t sell it or charge for it.</span>
+  <button class="footlink" id="footLicense">Usage &amp; license</button>
+</footer>
+
+<!-- hidden source: the marked-up example resume = the Overview help page -->
+<div id="overviewSrc" style="display:none">
+    <div class="resume-doc">
+      <div class="rsec">My Information</div>
+      <div class="rline"><div class="txt"><span class="k">First Name:</span> Fakey</div></div>
+      <div class="rline">
+        <div class="txt"><span class="k">Last Name:</span> Namey</div>
+        <div class="note" data-for="middle"><b>No middle-name line.</b> Workday drops a middle name into the Last Name box and throws your real surname away. <span class="tag">finding #18</span></div>
+      </div>
+      <div class="rline">
+        <div class="txt"><span class="hl"><span class="k">Address Line 1:</span> 123 Made Up Street</span></div>
+        <div class="note"><b>Nothing between your name and address.</b> A “seeking a role…” line here gets swallowed into your street address. <span class="tag">Probe 01/02</span></div>
+      </div>
+      <div class="rline"><div class="txt"><span class="k">City:</span> Fantasyland &nbsp;&nbsp; <span class="k">State:</span> US &nbsp;&nbsp; <span class="k">Postal Code:</span> 00000</div></div>
+      <div class="rline"><div class="txt"><span class="k">Email Address:</span> fakey.namey@example.com</div></div>
+      <div class="rline"><div class="txt"><span class="k">Phone Number:</span> (555) 555-0100</div></div>
+
+      <div class="rsec">Work Experience</div>
+      <div class="rline"><div class="txt"><b>Work Experience 1</b></div></div>
+      <div class="rline">
+        <div class="txt"><span class="hl"><span class="k">Job Title:</span> Systems Administrator</span></div>
+        <div class="note"><b>Every field is labeled.</b> “Job Title:” stops Workday rebuilding your title out of your bullet text. <span class="tag">Probe 06</span></div>
+      </div>
+      <div class="rline"><div class="txt"><span class="k">Company:</span> Northwind Systems</div></div>
+      <div class="rline"><div class="txt"><span class="k">Location:</span> Austin, TX</div></div>
+      <div class="rline">
+        <div class="txt"><span class="k">From:</span> 03/2021 &nbsp;&nbsp; <span class="hl"><span class="k">To:</span> Present</span></div>
+        <div class="note"><b>Dates as MM/YYYY.</b> “Present” ticks Workday’s current-job checkbox; the date wording itself never matters. <span class="tag">finding #1</span></div>
+      </div>
+      <div class="rline">
+        <div class="txt"><span class="hl">Managed a Windows Server domain for 300 users across two sites.</span></div>
+        <div class="note"><b>One line per accomplishment, no bullet dots.</b> Workday mangles the first dot and keeps the rest, so a bulleted list comes back half-broken. <span class="tag">Probe 12</span></div>
+      </div>
+      <div class="rline"><div class="txt">Cut help-desk ticket resolution time by 30 percent.</div></div>
+
+      <div class="rline" style="margin-top:9px"><div class="txt"><b>Work Experience 2</b></div></div>
+      <div class="rline"><div class="txt"><span class="k">Job Title:</span> IT Support Specialist</div></div>
+      <div class="rline"><div class="txt"><span class="k">Company:</span> Brightpath Group</div></div>
+      <div class="rline"><div class="txt"><span class="k">From:</span> 06/2018 &nbsp;&nbsp; <span class="k">To:</span> 02/2021</div></div>
+      <div class="rline"><div class="txt">Resolved hardware and network issues for 150 employees.</div></div>
+
+      <div class="rsec">Education</div>
+      <div class="rline"><div class="txt"><span class="k">School or University:</span> Fantasyland Community College</div></div>
+      <div class="rline">
+        <div class="txt"><span class="hl"><span class="k">Degree:</span> Associate of Science</span> &nbsp; <span class="k">Field of Study:</span> Information Technology</div>
+        <div class="note" data-for="picklist"><b>Match the employer’s dropdown.</b> Degree &amp; school wording differs per company — we advise, never auto-correct. Schools never autofill; type it. <span class="tag">finding #9/#10</span></div>
+      </div>
+
+      <div class="rsec">Skills</div>
+      <div class="rline">
+        <div class="txt"><span class="hl">Active Directory, Windows Server, DNS, DHCP, Networking</span></div>
+        <div class="note" data-for="skills"><b>Keep a Skills section.</b> It’s a trigger — with none, Workday fills in zero skills. <span class="tag">Probe 03</span></div>
+      </div>
+    </div>
+    <div class="process">
+      <h4>How to use this on Workday</h4>
+      <ol>
+        <li><b>Upload this file first</b> and let it autofill the form.</li>
+        <li>Fix anything the drop-downs need — your school, maybe your degree.</li>
+        <li><b>At the end of the work-experience page, delete this file and re-upload your nice human resume</b> — that's the copy the recruiter reads, and it won't change what was filled in.</li>
+      </ol>
+      <p>We know you spent time on your resume — that's what the recruiter gets. This version just hands the system your details cleanly and saves you the typing.</p>
+    </div>
+</div>
+
+<!-- help center: left page list + content (only visible while Help is open) -->
+<div id="help">
+  <div class="frame">
+    <nav class="nav">
+      <h4>Help pages</h4>
+      <div id="helpNav"></div>
+    </nav>
+    <div class="content">
+      <button class="primary close" id="helpClose">Done</button>
+      <div id="helpBody"></div>
+    </div>
+  </div>
+</div>
+
+<script src="vendor/pdf.min.js"></script>
+<script src="vendor/mammoth.browser.min.js"></script>
+<script src="vendor/jszip.min.js"></script>
+<script src="vendor/jspdf.umd.min.js"></script>
+<script>
+(function(){
+  "use strict";
+  if(window.pdfjsLib){ pdfjsLib.GlobalWorkerOptions.workerSrc = "vendor/pdf.worker.min.js"; }
+
+  const $ = s => document.querySelector(s);
+  const viewer = $("#viewerContent");
+
+  /* ---------- file loading ---------- */
+  const drop = $("#drop"), fileInput = $("#fileInput");
+  $("#browseBtn").onclick = () => fileInput.click();
+  fileInput.onchange = e => e.target.files[0] && loadFile(e.target.files[0]);
+  ["dragenter","dragover"].forEach(ev => drop.addEventListener(ev, e => {e.preventDefault(); drop.classList.add("drag");}));
+  ["dragleave","drop"].forEach(ev => drop.addEventListener(ev, e => {e.preventDefault(); drop.classList.remove("drag");}));
+  drop.addEventListener("drop", e => { const f = e.dataTransfer.files[0]; if(f) loadFile(f); });
+
+  $("#pasteToggle").onclick = () => {
+    const a = $("#pasteArea"); a.style.display = a.style.display==="none" ? "block":"none"; a.focus();
+  };
+  $("#pasteArea").addEventListener("input", e => {
+    viewer.innerHTML = ""; const pre = document.createElement("pre"); pre.textContent = e.target.value; viewer.appendChild(pre);
+  });
+
+  async function loadFile(file){
+    const ext = file.name.split(".").pop().toLowerCase();
+    viewer.innerHTML = '<p class="hint">Loading '+file.name+'…</p>';
+    try{
+      if(ext==="txt"){ const t = await file.text(); showText(t); }
+      else if(ext==="docx"){ const buf = await file.arrayBuffer();
+        const res = await mammoth.convertToHtml({arrayBuffer:buf});
+        viewer.innerHTML = '<div class="docx">'+res.value+'</div>'; }
+      else if(ext==="pdf"){ await showPdf(await file.arrayBuffer()); }
+      else showText("Unsupported file type. Use .pdf, .docx, or .txt.");
+    }catch(err){ viewer.innerHTML = '<p class="hint">Could not read that file: '+err.message+'</p>'; }
+  }
+  function showText(t){ viewer.innerHTML=""; const pre=document.createElement("pre"); pre.textContent=t; viewer.appendChild(pre); }
+  async function showPdf(buf){
+    viewer.innerHTML="";
+    const pdf = await pdfjsLib.getDocument({data:buf}).promise;
+    const out = [];
+    for(let n=1;n<=pdf.numPages;n++){
+      const page = await pdf.getPage(n);
+      const tc = await page.getTextContent();
+      const rows = [];                 // bucket items into visual lines by y-position
+      const TOL = 4;
+      for(const it of tc.items){
+        if(!it.str) continue;
+        const x = it.transform[4], y = it.transform[5];
+        let row = rows.find(r => Math.abs(r.y - y) <= TOL);
+        if(!row){ row = {y:y, items:[]}; rows.push(row); }
+        row.items.push({x:x, w:it.width||0, str:it.str});
+      }
+      rows.sort((a,b) => b.y - a.y);   // top of page first (pdf y grows upward)
+      // estimate the normal single-line spacing from the median row-to-row gap,
+      // so a larger gap can be read as a paragraph break and re-spaced.
+      const gaps = [];
+      for(let i=1;i<rows.length;i++){ const g = rows[i-1].y - rows[i].y; if(g>0) gaps.push(g); }
+      gaps.sort((a,b)=>a-b);
+      const lineH = gaps.length ? gaps[Math.floor(gaps.length/2)] : 0;
+      let prevY = null;
+      for(const r of rows){
+        r.items.sort((a,b) => a.x - b.x);
+        let line = "", prevEnd = null;
+        for(const it of r.items){
+          if(prevEnd !== null && it.x - prevEnd > 1) line += " ";   // space only on a real gap
+          line += it.str;
+          prevEnd = it.x + it.w;
+        }
+        line = line.replace(/[ \t]{2,}/g, " ").trim();
+        if(!line) continue;
+        // extra vertical space before this row → paragraph break in the original
+        if(prevY !== null && lineH > 0 && (prevY - r.y) > lineH * 1.6) out.push("");
+        out.push(line);
+        prevY = r.y;
+      }
+      if(n < pdf.numPages) out.push("");
+    }
+    const pre = document.createElement("pre");
+    pre.textContent = out.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+    viewer.appendChild(pre);
+  }
+
+  /* ---------- whitespace forgiveness ----------
+     Collapse ANY run of whitespace (spaces, tabs, newlines, non-breaking
+     spaces from a wide copy/paste) to a single space and trim the ends.
+     Runs at render time so the input boxes stay forgiving — paste whatever,
+     we never emit stray gaps into the Workday output. */
+  const collapse = s => (s||"").replace(/\s+/g, " ").trim();
+
+  /* ---------- bullet normalizer (the star) ---------- */
+  const MARKER = /^[\s ]*([•·▪◦‣∙*\-–—>+]|\d+[.)])[\s ]+/;
+  function normalizeBullets(raw){
+    const rawLines = raw.split(/\r?\n/);
+    const hasMarkers = rawLines.some(l => MARKER.test(l));
+    let removed = 0;
+    const bullets = [];
+    for(const line of rawLines){
+      const t = collapse(line);
+      if(!t) continue;   // drops trailing/blank lines (incl. the paste-newline)
+      if(hasMarkers){
+        if(MARKER.test(line)){ removed++; bullets.push(collapse(line.replace(MARKER, ""))); }
+        else if(bullets.length){ bullets[bullets.length - 1] += " " + t; }   // wrapped continuation → rejoin
+        else bullets.push(t);
+      } else {
+        bullets.push(t);   // no markers anywhere → one bullet per line
+      }
+    }
+    return {lines: bullets, removed};
+  }
+
+  /* ---------- job blocks ---------- */
+  const MONTHS = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+  const YEARS = (()=>{ const a=[]; for(let y=new Date().getFullYear(); y>=1900; y--) a.push(y); return a; })();
+  const jobsBox = $("#jobs");
+  // build the option lists ONCE; reuse the same string for every dropdown
+  const MONTH_OPTS = '<option value="">Month</option>'+MONTHS.map(m=>'<option>'+m+'</option>').join("");
+  const YEAR_OPTS  = '<option value="">Year</option>'+YEARS.map(y=>'<option>'+y+'</option>').join("");
+  function monthSel(cls){ return '<select'+(cls?' class="'+cls+'"':'')+'>'+MONTH_OPTS+'</select>'; }
+  function yearSel(cls){ return '<select'+(cls?' class="'+cls+'"':'')+'>'+YEAR_OPTS+'</select>'; }
+  // states (50 only for now; territories later) + email providers -- built once, reused
+  const STATES = ["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"];
+  const STATE_OPTS = '<option value="">State</option>'+STATES.map(s=>'<option>'+s+'</option>').join("");
+  function stateSel(cls){ return '<select'+(cls?' class="'+cls+'"':'')+'>'+STATE_OPTS+'</select>'; }
+  const PROVIDERS = ["gmail.com","yahoo.com","hotmail.com","outlook.com","icloud.com","aol.com","comcast.net","live.com","msn.com","att.net","verizon.net","sbcglobal.net","me.com","ymail.com","protonmail.com","proton.me","mail.com","gmx.com","zoho.com","cox.net"];
+  const PROVIDER_OPTS = '<option value="">Select provider</option>'+PROVIDERS.map(p=>'<option value="'+p+'">@'+p+'</option>').join("")+'<option value="other">Other (type it) →</option>';
+  function addJob(){
+    const div = document.createElement("div");
+    div.className = "job";
+    div.innerHTML =
+      '<div class="jobhead"><b class="jobnum"></b><button class="ghost rm" style="padding:4px 10px">Remove</button></div>'+
+      '<div class="grid">'+
+        '<div><label>Company</label><input class="j-company"></div>'+
+        '<div><label>Job title</label><input class="j-title"></div>'+
+        '<div><label>City</label><input class="j-city"><span class="citymsg">→ set your State separately</span></div>'+
+        '<div><label>State</label>'+stateSel("j-state")+'</div>'+
+        '<div><label>From</label><div class="datewrap">'+monthSel()+yearSel("j-fromY")+'</div></div>'+
+        '<div><label>To</label><div class="datewrap">'+monthSel()+yearSel("j-toY")+'</div></div>'+
+        '<div class="full"><div class="checkline"><input type="checkbox" class="j-now"><span>I currently work here</span></div></div>'+
+        '<div class="full"><label>Achievements / What did you do there? — paste the whole list at once, however it’s formatted; we clean it up</label><textarea class="j-bullets" placeholder="Copy your ENTIRE bullet list and paste it here — no need to go line by line. We strip the •, -, and numbering for you."></textarea>'+
+          '<div class="stat"></div></div>'+
+      '</div>';
+    jobsBox.appendChild(div);
+    const now = div.querySelector(".j-now");
+    const toSel = div.querySelector(".datewrap:nth-of-type(2) select") || div.querySelectorAll(".datewrap")[1].querySelector("select");
+    const toY = div.querySelector(".j-toY");
+    now.onchange = () => { const off = now.checked; toSel.disabled=off; toY.disabled=off; };
+    const ta = div.querySelector(".j-bullets");
+    const stat = div.querySelector(".stat");
+    ta.addEventListener("paste", e => {
+      e.preventDefault();
+      const text = ((e.clipboardData || window.clipboardData).getData("text") || "");
+      const {lines, removed} = normalizeBullets(text);
+      const cleaned = lines.join("\n");
+      const s = ta.selectionStart, en = ta.selectionEnd;
+      const ins = cleaned + "\n";   // trailing newline so the next click lands on a fresh line
+      ta.value = ta.value.slice(0, s) + ins + ta.value.slice(en);
+      ta.selectionStart = ta.selectionEnd = s + ins.length;
+      stat.textContent = lines.length ? ("✓ cleaned "+lines.length+" line"+(lines.length>1?"s":"")+(removed?(" · removed "+removed+" marker"+(removed>1?"s":"")):"")) : "";
+    });
+    ta.addEventListener("input", () => {
+      const n = ta.value.split(/\n/).filter(l=>l.trim()).length;
+      stat.textContent = n ? (n+" line"+(n>1?"s":"")) : "";
+    });
+    div.querySelector(".rm").onclick = () => { div.remove(); renumber(); };
+    renumber();
+  }
+  function renumber(){ [...jobsBox.querySelectorAll(".job .jobnum")].forEach((b,i)=>b.textContent="Work Experience "+(i+1)); }
+  $("#addJob").onclick = addJob;
+  addJob();
+
+  // education date pickers -- identical options to the job pickers
+  ["eduFromM","eduToM"].forEach(id => { $("#"+id).innerHTML = MONTH_OPTS; });
+  ["eduFromY","eduToY"].forEach(id => { $("#"+id).innerHTML = YEAR_OPTS; });
+  function dateVal(mSel, ySel){ const m=$(mSel).value, y=$(ySel).value; return (m&&y) ? (m+"/"+y) : (y||""); }
+
+  // populate contact state + email provider dropdowns
+  $("#state").innerHTML = STATE_OPTS;
+  $("#emailProvider").innerHTML = PROVIDER_OPTS;
+
+  // "set = green" once a dropdown has a value
+  document.addEventListener("change", e => { if(e.target.tagName === "SELECT") e.target.classList.toggle("set", !!e.target.value); });
+
+  // input masks -- boxes only accept what they represent
+  function mask(el, fn){ if(el) el.addEventListener("input", () => { el.value = fn(el.value); }); }
+  mask($("#postal"), v => { v = v.replace(/\D/g,"").slice(0,9); return v.length>5 ? v.slice(0,5)+"-"+v.slice(5) : v; });
+  mask($("#phone"), v => { const d=v.replace(/\D/g,"").slice(0,10); let o=""; if(d.length>0)o="("+d.slice(0,3); if(d.length>=3)o+=") "+d.slice(3,6); if(d.length>=6)o+="-"+d.slice(6); return o; });
+
+  // 3-part email: local @ provider | custom domain
+  const emLocal=$("#emailLocal"), emProv=$("#emailProvider"), emDom=$("#emailDomain");
+  emLocal.addEventListener("input", () => { emLocal.value = emLocal.value.replace(/@.*/,"").trim(); });
+  emDom.addEventListener("input", () => { emDom.value = emDom.value.replace(/^@+/,"").trim(); });
+  function syncEmail(){ const real = emProv.value && emProv.value!=="other"; emDom.disabled = real; if(real) emDom.value=""; }
+  emProv.addEventListener("change", syncEmail); syncEmail();
+  function emailValue(){ const local=emLocal.value.replace(/@.*/,"").trim(); const real=emProv.value && emProv.value!=="other"; const domain=real?emProv.value:emDom.value.replace(/^@+/,"").trim(); return (local&&domain) ? local+"@"+domain : (local||""); }
+
+  // City boxes reject commas (people paste "Austin, TX"); keep only the part before the comma + nudge to State
+  document.addEventListener("input", e => {
+    if(!e.target.matches("#city, .j-city")) return;
+    if(e.target.value.includes(",")){
+      e.target.value = e.target.value.split(",")[0].trim();
+      const msg = e.target.parentElement.querySelector(".citymsg");
+      if(msg){ msg.classList.add("show"); clearTimeout(msg._t); msg._t = setTimeout(()=>msg.classList.remove("show"), 2600); }
+    }
+  });
+
+  /* ---------- render canonical format ---------- */
+  function jobDate(div, which){
+    const wraps = div.querySelectorAll(".datewrap");
+    const w = which==="from"?wraps[0]:wraps[1];
+    const m = w.querySelector("select").value, y = (which==="from"?div.querySelector(".j-fromY"):div.querySelector(".j-toY")).value.trim();
+    return (m&&y) ? (m+"/"+y) : (y||"");
+  }
+  function render(){
+    const L = [];
+    L.push("My Information");
+    L.push("First Name: "+val("#first"));
+    L.push("Last Name: "+val("#last"));
+    L.push("Address Line 1: "+val("#street"));
+    L.push("City: "+val("#city"));
+    L.push("State: "+val("#state"));
+    L.push("Postal Code: "+val("#postal"));
+    L.push("Email Address: "+emailValue());
+    L.push("Phone Number: "+val("#phone"));
+    L.push("");
+    L.push("Work Experience");
+    [...jobsBox.querySelectorAll(".job")].forEach((div,i)=>{
+      L.push("Work Experience "+(i+1));
+      L.push("Job Title: "+collapse(div.querySelector(".j-title").value));
+      L.push("Company: "+collapse(div.querySelector(".j-company").value));
+      const jCity=collapse(div.querySelector(".j-city").value), jState=div.querySelector(".j-state").value;
+      L.push("Location: "+(jCity&&jState ? jCity+", "+jState : (jCity||jState)));
+      L.push("From: "+jobDate(div,"from"));
+      L.push("To: "+(div.querySelector(".j-now").checked ? "Present" : jobDate(div,"to")));
+      normalizeBullets(div.querySelector(".j-bullets").value).lines.forEach(b=>L.push(b));
+      L.push("");
+    });
+    L.push("Education");
+    L.push("Education 1");
+    L.push("School or University: "+val("#school"));
+    L.push("Degree: "+val("#degree"));
+    L.push("Field of Study: "+val("#field"));
+    L.push("From: "+dateVal("#eduFromM","#eduFromY"));
+    L.push("To: "+dateVal("#eduToM","#eduToY"));
+    if(val("#gpa")) L.push("GPA: "+val("#gpa"));
+    L.push("");
+    L.push("Skills");
+    L.push(val("#skills"));
+    return L.join("\n");
+  }
+  function val(s){ return collapse($(s).value); }
+
+  $("#renderBtn").onclick = () => {
+    const text = render();
+    $("#output").textContent = text;
+    $("#outWrap").style.display = "block";
+    $("#outWrap").scrollIntoView({behavior:"smooth", block:"nearest"});
+  };
+  $("#copyBtn").onclick = () => navigator.clipboard.writeText($("#output").textContent).then(()=>{ $("#copyBtn").textContent="✓ Copied"; setTimeout(()=>$("#copyBtn").textContent="📋 Copy",1400); });
+  $("#downloadBtn").onclick = () => {
+    const blob = new Blob([$("#output").textContent], {type:"text/plain"});
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+    a.download = "workday-safe-resume.txt"; a.click(); URL.revokeObjectURL(a.href);
+  };
+
+  // ----- real .docx (minimal OOXML via JSZip) + .pdf (jsPDF), both client-side -----
+  function saveBlob(blob, name){ const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); }
+  function buildDocx(text){
+    const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    const paras = text.split("\n").map(l => '<w:p><w:r><w:t xml:space="preserve">'+esc(l)+'</w:t></w:r></w:p>').join("");
+    const document_xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>'+paras+'<w:sectPr/></w:body></w:document>';
+    const content_types = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>';
+    const rels = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>';
+    const zip = new JSZip();
+    zip.file("[Content_Types].xml", content_types);
+    zip.folder("_rels").file(".rels", rels);
+    zip.folder("word").file("document.xml", document_xml);
+    return zip.generateAsync({type:"blob", mimeType:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"});
+  }
+  function buildPdf(text){
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({unit:"pt", format:"letter"});
+    const margin=54, pageH=doc.internal.pageSize.getHeight(), maxW=doc.internal.pageSize.getWidth()-margin*2;
+    const lh=14, paraGap=8;                              // body line height + gap at blank lines
+    const SECTION = /^(My Information|Work Experience|Education|Skills)$/;   // top-level headers
+    const SUBHEAD = /^(Work Experience \d+|Education \d+)$/;                 // per-entry headers
+    let y=margin;
+    text.split("\n").forEach(raw => {
+      if(raw===""){ y += paraGap; return; }              // blank line → spacing, not an empty row
+      let size=10, weight="normal", lead=lh;
+      if(SECTION.test(raw)){ if(y>margin) y+=paraGap; size=13; weight="bold"; lead=lh+5; }
+      else if(SUBHEAD.test(raw)){ size=11; weight="bold"; lead=lh+2; }
+      doc.setFont("helvetica",weight); doc.setFontSize(size);
+      // keep each line as ONE logical line (matches the .docx) -- shrink to fit instead of wrapping,
+      // so Workday can't misread a wrapped bullet as several separate accomplishments
+      const w = doc.getTextWidth(raw);
+      if(w > maxW) doc.setFontSize(Math.max(6, size * maxW / w));
+      if(y > pageH-margin){ doc.addPage(); y=margin; }
+      doc.text(raw, margin, y); y += lead;
+    });
+    return doc;
+  }
+  $("#dlDocx").onclick = () => buildDocx(render()).then(b => saveBlob(b, "workday-safe-resume.docx"));
+  $("#dlPdf").onclick  = () => buildPdf(render()).save("workday-safe-resume.pdf");
+
+  /* ---------- help center: left page nav + individual pages ---------- */
+  // topic copy + example snippets, reused as the individual help pages
+  const TOPICS = {
+    offline:{title:"Run this on your own device (offline)",tag:"",html:"<p><b>You don't have to take our word for it — you can run this yourself.</b> Everything here already happens inside your browser, and nothing is uploaded anywhere. But if you'd feel safest with a copy that lives only on your own computer, you can save this page and run it with your internet turned off.</p><p><b>The quick way — save the page:</b></p><ol><li>Open your browser's menu and choose <b>Save Page As…</b> (<b>Ctrl+S</b> on Windows, <b>⌘S</b> on a Mac).</li><li>For the format, pick <b>“Web Page, Complete”</b> — <i>not</i> “HTML only” — so the helper files come along. You'll get an <b>.html</b> file plus a small folder next to it; keep them together in the same place.</li><li>Double-click the saved <b>.html</b> file. It opens in your browser and works the same — filling in the form and downloading your <b>.docx / .pdf / .txt</b> all work with the internet switched off.</li></ol><p><b>One caveat:</b> the on-screen <i>preview</i> of an uploaded PDF needs the page to be “served” rather than opened straight off a file, so from a plain saved copy that preview may not appear — but the parts that matter (building your file and downloading it) work fully offline.</p><p><b>The thorough way — for the technically comfortable:</b> put the saved files in a folder and run a tiny local web server inside it, for example <b>python3 -m http.server</b>, then open <b>http://localhost:8000/</b>. That gives you every feature, start to finish, with zero network traffic.</p>"},
+    license:{title:"Can I use this? (Usage & license)",tag:"",html:"<p><b>Yes — it's free for you to use.</b> Format as many resumes as you want, for yourself or to help friends and family, at no cost, forever.</p><p><b>The one rule: don't make money off it.</b> You may not sell this tool, charge people to use it, put it behind a paywall, or bundle it into a paid product or service. It's a free gift to job seekers, and it stays that way.</p><p>You're welcome to share it, link to it, and tell people about it. If you want to build on the code, you can — as long as whatever you make stays noncommercial and free too.</p><p>The full legal terms live in the project's <b>LICENSE</b> file (PolyForm Noncommercial 1.0.0). This is just the spirit of it: <i>use it, share it, help people with it — just don't charge for it.</i></p>"},
+    workday:{title:"What is Workday?",tag:"",html:"<p><b>Workday is the software big companies use to take job applications</b> (and to run their HR). If you're applying to a large employer, chances are you're filling out a Workday form.</p><p><b>Every company runs its own separate copy.</b> Each employer has their own Workday “tenant,” set up however they like — which is why the screens, and especially the drop-downs (degree, school, field of study), differ from one company to the next. No two are identical.</p><p><b>We aren't Workday's customer — the employers are.</b> The company pays Workday; you're just the company's applicant. We have no special access or inside deal. Everything on these pages we figured out by <i>testing</i> the parser ourselves.</p><p><b>That's why you make a new account every time.</b> Because each company's Workday is its own separate system, your login at one employer doesn't carry to another. New company = new Workday = new account.</p><hr><p><b>How to actually use this — the two-file trick:</b></p><ol><li><b>Upload the file you make here first.</b> It's built so Workday's parser reads your details correctly and autofills the form — so you're not retyping everything by hand.</li><li><b>Let it fill the form</b>, then fix anything the drop-downs need (your school, maybe your degree).</li><li><b>At the end of the work-experience page, Workday shows your uploaded file with a delete option. Delete it and re-upload your nice, human-friendly resume</b> — the one you spent time on. That becomes the copy the recruiter actually reads, and it won't change what was already filled in.</li></ol><p><i>We know you spent time on your resume — that's what the recruiter gets. This version is just to hand the system your details cleanly and save you the typing.</i></p>"},
+    middle:{title:"Why no middle name?",tag:"finding #18",html:"Workday takes a middle name and drops it into the <b>Last Name</b> box — then throws your real last name away. We saw it on two different Workday systems, every time. So there's no middle-name box here. You <i>can</i> add it to Last Name yourself, but now you know why we leave it out."},
+    bullets:{title:"Why did my bullet dots disappear?",tag:"Probe 12",html:"Workday mangles the <b>first</b> bullet's dot and keeps the rest, so a bulleted list comes back looking half-broken. We strip the dots and put each accomplishment on its own line — the shape Workday reads cleanly."},
+    dates:{title:"Why dropdowns for dates?",tag:"finding #1",html:"So the format is always right and there's nothing to mistype. Workday doesn't care <i>how</i> you write a date, but it does read “<b>Present</b>” as your current job — which is what the “I currently work here” box fills in."},
+    skills:{title:"Why can't I remove Skills?",tag:"Probe 03 + finding #11",html:"The Skills section is a hidden trigger: with <b>no</b> Skills section, Workday fills in <b>zero</b> skills, so we don't let you delete it. But here's the part to know — <b>Workday builds the skill list itself</b>, mostly from the wording in your accomplishments and your company names. (In our tests, a made-up company called <b>Brightwater Logistics</b> made Workday suggest “Logistics” as a skill on its own — that's how we know it reads your company names.) We don't set it directly and have <b>no control</b> over what it picks: it can even come back empty and then fill in on a re-upload, and because every employer runs their own Workday, what shows up can differ between companies. Keep the section, put the skills you want into how you describe your work, then glance at what actually populated — the final say is Workday's, not ours."},
+    tagline:{title:"Why nothing above my address?",tag:"Probe 01/02",html:"A line like “Seeking a challenging role…” between your name and address gets swallowed into your <b>street address</b> — and your real one is lost. The form keeps name and address cleanly apart."},
+    title:{title:"Why is every field labeled?",tag:"Probe 06",html:"Labels like “<b>Job Title:</b>” tell Workday exactly what each line is. Without them it guesses your title from your bullet text and often rebuilds it into something wrong. The labels stop that."},
+    picklist:{title:"Why won't you fix my school or degree?",tag:"finding #9/#10",html:"School and degree dropdowns are <b>different at every employer</b>, so there's no single right answer to fill in. We show what you typed and ask you to match it to that employer's list — guessing would just confidently insert the wrong thing. Schools never autofill either, so type yours in."}
+  };
+  // the matching snippet from the example resume, shown at the top of each page
+  const EX = {
+    middle:'<span class="k">First Name:</span> Fakey<br><span class="hl"><span class="k">Last Name:</span> Namey</span>',
+    bullets:'<span class="hl">Managed a Windows Server domain for 300 users across two sites.</span><br>Cut help-desk ticket resolution time by 30 percent.',
+    dates:'<span class="k">From:</span> 03/2021 &nbsp;&nbsp; <span class="hl"><span class="k">To:</span> Present</span>',
+    skills:'<span class="k">Company:</span> Brightwater <span class="hl">Logistics</span> Inc<br><span style="color:#5a6675">→ Workday added to your Skills:</span> <span class="hl">Logistics</span>',
+    tagline:'<span class="k">Last Name:</span> Namey<br><span class="hl"><span class="k">Address Line 1:</span> 123 Made Up Street</span>',
+    title:'<span class="hl"><span class="k">Job Title:</span> Systems Administrator</span><br><span class="k">Company:</span> Northwind Systems',
+    picklist:'<span class="hl"><span class="k">Degree:</span> Associate of Science</span> &nbsp; <span class="k">Field of Study:</span> Information Technology'
+  };
+  const PAGES = [
+    {id:"overview", nav:"Overview"},
+    {id:"workday",  nav:"What is Workday?"},
+    {id:"middle",   nav:"No middle name"},
+    {id:"tagline",  nav:"Nothing above your address"},
+    {id:"title",    nav:"Labeled fields"},
+    {id:"dates",    nav:"Dates & “Present”"},
+    {id:"bullets",  nav:"Accomplishments"},
+    {id:"skills",   nav:"Skills"},
+    {id:"picklist", nav:"School & degree"},
+    {id:"offline",  nav:"Run it offline"},
+    {id:"license",  nav:"Usage & license"}
+  ];
+  const help = $("#help"), helpNav = $("#helpNav"), helpBody = $("#helpBody");
+  PAGES.forEach(p => {
+    const b = document.createElement("button");
+    b.textContent = p.nav; b.dataset.id = p.id; b.onclick = () => showPage(p.id);
+    helpNav.appendChild(b);
+  });
+  function pageHTML(id){
+    if(id === "overview") return $("#overviewSrc").innerHTML;
+    const t = TOPICS[id]; if(!t) return "";
+    const ex = EX[id] ? '<div class="ex">'+EX[id]+'</div>' : '';
+    return '<h3>'+t.title+'</h3>'+ex+'<div class="body">'+t.html+'</div>'+(t.tag?'<span class="tag2">'+t.tag+'</span>':'');
+  }
+  function showPage(id){
+    helpBody.innerHTML = pageHTML(id);
+    helpBody.parentElement.scrollTop = 0;
+    helpNav.querySelectorAll("button").forEach(b => b.classList.toggle("active", b.dataset.id === id));
+  }
+  function openHelp(id){ showPage(id || "overview"); help.classList.add("on"); }
+  function closeHelp(){ help.classList.remove("on"); }
+  $("#helpBtn").onclick = () => openHelp("overview");
+  $("#helpClose").onclick = closeHelp;
+  help.addEventListener("click", e => { if(e.target === help) closeHelp(); });
+  document.querySelectorAll(".why").forEach(b => b.onclick = () => openHelp(b.dataset.note));
+  document.addEventListener("keydown", e => { if(e.key === "Escape") closeHelp(); });
+
+  // draggable splitter + swap logic
+  (function(){
+    const mainEl = $("#main"), viewerPane = $("#viewerPane"), formPane = $("#formPane"),
+          divider = $("#divider"), holdPos = $("#holdPos");
+    let frac = 0.5;  // the viewer pane's share of the width (0.2 .. 0.8)
+    try{ const s = parseFloat(localStorage.getItem("wrf-split")); if(s >= 0.2 && s <= 0.8) frac = s; }catch(e){}
+    const apply = () => { viewerPane.style.flexGrow = frac; formPane.style.flexGrow = 1 - frac; };
+    const saveSplit = () => { try{ localStorage.setItem("wrf-split", frac.toFixed(3)); }catch(e){} };
+    apply();
+
+    // "Hold position" toggle -- remembered across visits
+    try{ if(localStorage.getItem("wrf-holdpos") === "1") holdPos.checked = true; }catch(e){}
+    holdPos.onchange = () => { try{ localStorage.setItem("wrf-holdpos", holdPos.checked ? "1" : "0"); }catch(e){} };
+
+    // Swap sides. Hold ON  = each panel keeps its own size and they trade places (mirror).
+    //            Hold OFF = the left/right sizes stay put; content moves into the other-sized
+    //                       slot, so a small panel becomes the big one with one click.
+    $("#swapBtn").onclick = () => {
+      mainEl.classList.toggle("reversed");
+      if(!holdPos.checked){ frac = 1 - frac; apply(); saveSplit(); }
+    };
+
+    if(!divider) return;
+    function onMove(e){
+      const pt = e.touches ? e.touches[0] : e;
+      const r = mainEl.getBoundingClientRect();
+      let mf = (pt.clientX - r.left) / r.width;                 // mouse position as a fraction from the left
+      if(mainEl.classList.contains("reversed")) mf = 1 - mf;    // viewer is on the right when swapped
+      frac = Math.min(0.8, Math.max(0.2, mf));
+      apply();
+    }
+    function stop(){
+      divider.classList.remove("drag");
+      document.body.style.userSelect = "";
+      window.removeEventListener("mousemove", onMove); window.removeEventListener("mouseup", stop);
+      window.removeEventListener("touchmove", onMove); window.removeEventListener("touchend", stop);
+      try{ localStorage.setItem("wrf-split", frac.toFixed(3)); }catch(e){}
+    }
+    function start(e){
+      e.preventDefault();
+      divider.classList.add("drag");
+      document.body.style.userSelect = "none";
+      window.addEventListener("mousemove", onMove); window.addEventListener("mouseup", stop);
+      window.addEventListener("touchmove", onMove, {passive:false}); window.addEventListener("touchend", stop);
+    }
+    divider.addEventListener("mousedown", start);
+    divider.addEventListener("touchstart", start, {passive:false});
+    divider.addEventListener("dblclick", () => { frac = 0.5; apply(); try{ localStorage.setItem("wrf-split","0.500"); }catch(e){} });
+    divider.title = "Drag to resize • double-click to reset to 50/50";
+  })();
+
+  // theme / "look" selector -- three explicit palettes, remembered across visits
+  const themeBtns = document.querySelectorAll("#themeSel button");
+  function applyTheme(t){
+    document.documentElement.setAttribute("data-theme", t);
+    themeBtns.forEach(b => b.classList.toggle("active", b.dataset.themeChoice === t));
+    try{ localStorage.setItem("wrf-theme", t); }catch(e){}
+  }
+  let savedTheme = "custom";
+  try{ savedTheme = localStorage.getItem("wrf-theme") || "custom"; }catch(e){}
+  applyTheme(savedTheme);
+  themeBtns.forEach(b => b.onclick = () => applyTheme(b.dataset.themeChoice));
+
+  // first-load hook banner -> jumps to the "What is Workday?" help page
+  $("#bannerGo").onclick = () => { $("#banner").classList.add("hide"); openHelp("workday"); };
+  $("#bannerX").onclick = () => $("#banner").classList.add("hide");
+  $("#footLicense").onclick = () => openHelp("license");
+})();
+</script>
+</body>
+</html>
