@@ -881,9 +881,11 @@
   applyTheme(savedTheme);
   themeBtns.forEach(b => b.onclick = () => applyTheme(b.dataset.themeChoice));
 
-  // first-load hook banner -> jumps to the "What is Workday?" help page
-  $("#bannerGo").onclick = () => { $("#banner").classList.add("hide"); openHelp("workday"); };
-  $("#bannerX").onclick = () => $("#banner").classList.add("hide");
+  // first-load hook banner -> jumps to the "What is Workday?" help page; shown once, then remembered
+  const bannerSeen = () => { try{ localStorage.setItem("wrf-bannerSeen","1"); }catch(e){} };
+  try{ if(localStorage.getItem("wrf-bannerSeen") === "1") $("#banner").classList.add("hide"); }catch(e){}
+  $("#bannerGo").onclick = () => { $("#banner").classList.add("hide"); bannerSeen(); openHelp("workday"); };
+  $("#bannerX").onclick = () => { $("#banner").classList.add("hide"); bannerSeen(); };
   $("#footLicense").onclick = () => openHelp("license");
 })();
 </script>
