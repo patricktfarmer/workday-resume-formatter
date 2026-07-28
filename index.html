@@ -248,6 +248,8 @@
   :root[data-mode="build"] #holdPos,
   :root[data-mode="build"] #mobilenote{ display:none !important; }
   :root[data-mode="build"] #formPane{ flex:1 1 auto; width:100%; max-width:min(1100px,92vw); margin:0 auto; }
+  #formHowto{display:none; margin-top:16px}
+  :root[data-mode="build"] #formHowto{display:block}
 
   /* landing = the two-door chooser; hide the working panes + the mode-only header controls */
   #landing{display:none}
@@ -454,6 +456,18 @@
       </div>
       <div class="advise" style="margin-top:8px">💡 <b>Use the .docx</b>: it's the format Workday autofills from the cleanest, and it loads faster than a PDF. Plain-text (.txt) is here too. (We tried a PDF version as well, but Word parsed more reliably, so we kept it simple.)</div>
       <div id="output"></div>
+    </div>
+    <div id="formHowto">
+      <p class="hint" style="margin-bottom:8px">👇 Got your .docx downloaded? Here's the trick to actually using it on Workday.</p>
+      <div class="howto">
+        <h3>How to use this on Workday: the two-file trick</h3>
+        <ol>
+          <li><b>Upload the file you make here first.</b> It's built so Workday's parser reads your details correctly and autofills the form, so you're not retyping everything by hand.</li>
+          <li><b>Let it fill the form</b>, then fix anything the drop-downs need (your school, maybe your degree).</li>
+          <li><b>At the end of the work-experience page, Workday shows your uploaded file with a delete option. Delete it and re-upload your nice, human-friendly resume</b>, the one you spent time on. That becomes the copy the recruiter actually reads, and it won't change what was already filled in.</li>
+        </ol>
+        <p class="howto-foot">We know you spent time on your resume, and that's what the recruiter gets. This version is just to hand the system your details cleanly and save you the typing.</p>
+      </div>
     </div>
   </section>
 </main>
