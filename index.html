@@ -251,6 +251,70 @@
   #formHowto{display:none; margin-top:16px}
   :root[data-mode="build"] #formHowto{display:block}
 
+  /* guide = the "Highlight & we'll build it" walkthrough (ported from guided-proto.html).
+     top/bottom layout, no split/swap/hold. Every rule scoped under #guidePane so the proto's
+     generic class names (.prompt/.tok/.row/.note) can't leak into the rest of the page. */
+  :root[data-mode="guide"] #main,
+  :root[data-mode="guide"] #mobilenote,
+  :root[data-mode="guide"] #buildBtn,
+  :root[data-mode="guide"] #swapBtn,
+  :root[data-mode="guide"] .holdpos{ display:none !important; }
+  #guidePane{display:none}
+  :root[data-mode="guide"] #guidePane{ display:flex; flex:1 1 auto; min-height:0; flex-direction:column }
+
+  /* sub-screens within guide: upload → guide → out, driven by #guidePane[data-gs] */
+  #gUpload, #gGuide, #gOutwrap{ display:none }
+  #guidePane[data-gs="upload"] #gUpload{ display:flex }
+  #guidePane[data-gs="guide"]  #gGuide{ display:flex }
+  #guidePane[data-gs="out"]    #gOutwrap{ display:flex }
+
+  #guidePane .gbtn{ background:var(--accent); color:var(--accent-ink,#fff); border:0; border-radius:10px;
+    padding:9px 14px; cursor:pointer; font:inherit; font-weight:600 }
+  #guidePane .gbtn.ghost{ background:transparent; color:var(--ink); border:1px solid var(--line); font-weight:500 }
+  #guidePane .gbtn.ok{ background:var(--ok,#43c98a); color:#fff }
+  #guidePane .gbtn:disabled{ opacity:.45; cursor:default }
+  #guidePane .gnote{ color:var(--muted); font-size:13px }
+
+  #gUpload{ flex:1 1 auto; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:24px; text-align:center }
+  #gUpload .gdrop{ border:2px dashed var(--line); border-radius:16px; padding:40px 34px; max-width:560px; width:100% }
+  #gUpload h2{ margin:.2em 0 }
+  #gUpload p{ color:var(--muted); margin:.3em 0 }
+
+  #gGuide{ flex:1 1 auto; min-height:0; flex-direction:column }
+  #guidePane .gprompt{ background:var(--panel); border-bottom:1px solid var(--line); padding:12px 16px }
+  #guidePane .gprompt .kicker{ font-size:12px; color:var(--muted); letter-spacing:.02em }
+  #guidePane .gprompt .q{ font-size:18px; font-weight:700; margin:2px 0 }
+  #guidePane .gprompt .sub{ font-size:13px; color:var(--muted); margin:0 0 8px }
+  #guidePane .gprompt .cap{ font-size:14px; color:var(--muted); min-height:1.4em; margin-bottom:8px }
+  #guidePane .gprompt .cap b{ color:var(--ink) }
+  #guidePane .gprompt .row{ display:flex; gap:8px; flex-wrap:wrap; align-items:center }
+  #guidePane .gprompt textarea{ width:100%; margin-top:8px; min-height:70px; background:var(--bg); color:var(--ink);
+    border:1px solid var(--line); border-radius:10px; padding:8px; font:inherit; display:none }
+  #guidePane .addrgrid{ display:none; gap:8px; flex-wrap:wrap; margin-top:8px }
+  #guidePane .addrgrid input{ flex:1; min-width:120px; background:var(--bg); color:var(--ink);
+    border:1px solid var(--line); border-radius:10px; padding:9px; font:inherit }
+  #guidePane .addrgrid input.st{ max-width:130px } #guidePane .addrgrid input.zp{ max-width:130px }
+  #gResume{ flex:1 1 auto; overflow:auto; padding:14px 16px; min-height:0 }
+  #guidePane .rline{ margin:0 0 2px }
+  #guidePane .rline.blank{ height:.7em }
+  #guidePane .tok{ cursor:pointer; border-radius:4px; padding:0 1px }
+  @media (hover:hover){ #guidePane .tok:hover{ background:color-mix(in srgb, var(--accent) 30%, transparent) } }
+  #guidePane .tok.sel{ background:var(--accent); color:#fff }
+  #guidePane .tok.end{ box-shadow:0 0 0 2px var(--bg), 0 0 0 4px var(--accent) }
+  #guidePane .tok.done{ background:color-mix(in srgb, var(--ok,#43c98a) 28%, transparent) }
+  #gFormview{ border-top:2px solid var(--line); background:var(--panel); max-height:34vh; overflow:auto; padding:12px 16px }
+  #gFormview h3{ margin:0 0 8px; font-size:13px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted) }
+  #guidePane .fv-grp{ margin-bottom:10px }
+  #guidePane .fv-grp .t{ font-weight:700; font-size:13px; margin-bottom:2px }
+  #guidePane .fv-line{ font-size:14px }
+  #guidePane .fv-line .lab{ color:var(--muted) }
+  #guidePane .fv-empty{ color:var(--muted); font-style:italic }
+
+  #gOutwrap{ flex:1 1 auto; flex-direction:column; gap:10px; min-height:0; padding:16px }
+  #gOut{ flex:1 1 auto; min-height:240px; width:100%; background:var(--panel); color:var(--ink);
+    border:1px solid var(--line); border-radius:12px; padding:12px; font:13px/1.5 ui-monospace,Menlo,Consolas,monospace }
+  #gOutwrap .row{ display:flex; gap:8px; flex-wrap:wrap }
+
   /* landing = the two-door chooser; hide the working panes + the mode-only header controls */
   #landing{display:none}
   :root[data-mode="landing"] #landing{display:flex}
@@ -274,6 +338,9 @@
   .door-viz{flex:0 0 auto; width:118px; height:78px; border:2px solid var(--field-line); border-radius:8px;
     display:flex; gap:6px; padding:9px; background:var(--field)}
   .door-viz span{flex:1; border-radius:4px; background:var(--accent); opacity:.32}
+  /* guide door: stacked "lines" with one lit up — the highlight motif */
+  .door-viz-guide{flex-direction:column; gap:5px}
+  .door-viz-guide .lit{opacity:1}
   @media (max-width:820px){ .door{gap:16px; padding:16px; min-height:104px} .door-viz{width:84px; height:58px} .door-text b{font-size:18px} .door-text p{font-size:13.5px} }
 
   /* desktop: each pane scrolls on its own, so filling the long form isn't one giant page-scroll */
@@ -299,8 +366,8 @@
     var el = document.documentElement;
     try{ el.setAttribute("data-theme", localStorage.getItem("wrf-theme") || "custom"); }
     catch(e){ el.setAttribute("data-theme","custom"); }
-    var h = location.hash, mode = (h==="#build"||h==="#convert") ? h.slice(1) : null;
-    if(!mode){ try{ var m = localStorage.getItem("wrf-mode"); mode = (m==="build"||m==="convert") ? m : "landing"; }catch(e){ mode = "landing"; } }
+    var h = location.hash, mode = (h==="#build"||h==="#convert"||h==="#guide") ? h.slice(1) : null;
+    if(!mode){ try{ var m = localStorage.getItem("wrf-mode"); mode = (m==="build"||m==="convert"||m==="guide") ? m : "landing"; }catch(e){ mode = "landing"; } }
     el.setAttribute("data-mode", mode);
   })();
 </script>
@@ -344,11 +411,11 @@
 <section id="landing">
   <div class="landing-inner">
     <p class="landing-h">How do you want to build it?</p>
-    <button type="button" class="door" data-mode="build">
-      <div class="door-viz"><span></span></div>
+    <button type="button" class="door" data-mode="guide">
+      <div class="door-viz door-viz-guide"><span></span><span class="lit"></span><span></span></div>
       <div class="door-text">
-        <b>Fill in the form</b>
-        <p>Type your details straight into our Workday-safe form. No file needed, and you'll get a ready-to-upload .docx at the end.</p>
+        <b>Highlight &amp; we'll build it</b>
+        <p>Upload your resume and just tap the pieces we ask for, and we'll build the form for you. The friendliest way, and you still get a ready-to-upload .docx at the end.</p>
       </div>
     </button>
     <button type="button" class="door" data-mode="convert">
@@ -358,6 +425,64 @@
         <p>Open your existing resume side-by-side and copy the details across into the form. Best if you already have one written.</p>
       </div>
     </button>
+    <button type="button" class="door" data-mode="build">
+      <div class="door-viz"><span></span></div>
+      <div class="door-text">
+        <b>Fill in the form</b>
+        <p>Type your details straight into our Workday-safe form. No file needed, and you'll get a ready-to-upload .docx at the end.</p>
+      </div>
+    </button>
+  </div>
+</section>
+
+<section id="guidePane" data-gs="upload">
+  <!-- upload -->
+  <div id="gUpload">
+    <div class="gdrop">
+      <h2>Highlight &amp; we'll build it for you</h2>
+      <p>Upload your resume. We'll walk you through it one piece at a time.<br>Tap a word to start, tap another to select everything between. That's it.</p>
+      <p style="margin:18px 0"><button class="gbtn" id="gPick">Upload resume</button></p>
+      <p class="gnote">.pdf, .docx, or .txt. Your information never leaves your device.</p>
+      <input type="file" id="gFile" accept=".pdf,.docx,.txt" hidden>
+    </div>
+  </div>
+  <!-- guide -->
+  <div id="gGuide">
+    <div class="gprompt" id="gPrompt">
+      <div class="kicker" id="gKicker">Step</div>
+      <div class="q" id="gQ">Loading…</div>
+      <div class="sub" id="gSub"></div>
+      <div class="cap" id="gCap"></div>
+      <div class="row">
+        <button class="gbtn ok" id="gUse" disabled>✓ Use this</button>
+        <button class="gbtn ghost" id="gPasteBtn">Type it in</button>
+        <button class="gbtn ghost" id="gUsePaste" style="display:none" disabled>Use Typed Text</button>
+        <button class="gbtn ghost" id="gSkip">Skip</button>
+        <button class="gbtn ghost" id="gBack">← Back</button>
+        <button class="gbtn ghost" id="gBuildNow">Build it now →</button>
+      </div>
+      <textarea id="gPasteBox" placeholder="Type or paste it here…"></textarea>
+      <div class="addrgrid" id="gAddrGrid">
+        <input id="gaAddr" placeholder="Street address">
+        <input id="gaCity" placeholder="City">
+        <input id="gaState" class="st" placeholder="State">
+        <input id="gaZip" class="zp" placeholder="ZIP">
+        <button class="gbtn ghost" id="gUseAddr" disabled>Use Address</button>
+      </div>
+    </div>
+    <div id="gResume"></div>
+    <div id="gFormview"><h3>Your resume so far</h3><div id="gFv"></div></div>
+  </div>
+  <!-- out -->
+  <div id="gOutwrap">
+    <h2 style="margin:.2em 0">Here's your Workday-ready resume</h2>
+    <p class="gnote">Download the .docx and upload it to Workday first; it autofills the form. Then swap in your own resume for the recruiter to read.</p>
+    <textarea id="gOut" readonly></textarea>
+    <div class="row">
+      <button class="gbtn" id="gDlDocx">Download .docx</button>
+      <button class="gbtn ghost" id="gCopy">Copy</button>
+      <button class="gbtn ghost" id="gRestart">Start over</button>
+    </div>
   </div>
 </section>
 
@@ -858,6 +983,7 @@
     zip.folder("word").file("document.xml", document_xml);
     return zip.generateAsync({type:"blob", mimeType:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"});
   }
+  window.__wrfBuildDocx = buildDocx; // seam: guide mode reuses this validated docx builder
   $("#dlDocx").onclick = () => buildDocx(render()).then(b => saveBlob(b, "workday-safe-resume.docx"));
 
   /* ---------- help center: left page nav + individual pages ---------- */
@@ -1025,14 +1151,14 @@
       root.setAttribute("data-mode", mode);
       if(mode !== "landing"){
         try{ localStorage.setItem(KEY, mode); }catch(e){}
-        buildBtn.textContent = FLIP[mode];
+        if(FLIP[mode]) buildBtn.textContent = FLIP[mode]; // guide has no flip target; button is hidden in guide mode
       }
     }
     function fromHash(){
       const h = location.hash;
-      if(h === "#build" || h === "#convert"){ setMode(h.slice(1)); return; }
+      if(h === "#build" || h === "#convert" || h === "#guide"){ setMode(h.slice(1)); return; }
       let saved = null; try{ saved = localStorage.getItem(KEY); }catch(e){}
-      setMode(saved === "build" || saved === "convert" ? saved : "landing");
+      setMode(saved === "build" || saved === "convert" || saved === "guide" ? saved : "landing");
     }
     buildBtn.onclick = () => { location.hash = (root.getAttribute("data-mode") === "build") ? "convert" : "build"; };
     document.querySelectorAll("#landing .door").forEach(d => { d.onclick = () => { location.hash = d.dataset.mode; }; });
@@ -1044,6 +1170,344 @@
     window.addEventListener("hashchange", fromHash);
     fromHash();
   })();
+})();
+</script>
+
+<script>
+/* ---- guide mode: tap-the-words walkthrough (ported from guided-proto.html) ----
+   Self-contained IIFE. Reuses the page's vendored pdf.js/mammoth and the validated docx
+   builder via window.__wrfBuildDocx. Sub-screen state lives on #guidePane[data-gs]. */
+(function(){
+  const $ = s => document.querySelector(s);
+  const gp = $("#guidePane");
+  if(!gp) return;
+  function setScreen(s){ gp.setAttribute("data-gs", s); }
+
+  /* cleaners (mirror index.html / proto intent; kept local so guide is self-contained) */
+  const collapse = s => (s||"").replace(/\s+/g," ").trim();
+  const MARKER = /^[\s ]*([•·▪◦‣∙*\-–—>+]|\d+[.)])[\s ]+/;
+  function normalizeBullets(raw){
+    const lines=(raw||"").split(/\r?\n/);
+    const hasMarkers=lines.some(l=>MARKER.test(l));
+    const out=[];
+    for(const line of lines){
+      const t=collapse(line); if(!t) continue;
+      if(hasMarkers){
+        if(MARKER.test(line)) out.push(collapse(line.replace(MARKER,"")));
+        else if(out.length) out[out.length-1]+=" "+t;
+        else out.push(t);
+      } else out.push(t);
+    }
+    return out;
+  }
+  function cleanSkills(raw){
+    let s=(raw||"");
+    s=s.replace(/[|;\n\r•·▪◦‣∙()]/g,",");
+    s=s.replace(/\s[-–—]\s/g,",");
+    s=s.replace(/[^\w&,\s]/g," ");
+    s=s.replace(/\s+/g," ");
+    return s.split(",").map(x=>x.trim()).filter(Boolean).join(", ");
+  }
+  const STATES={alabama:"AL",alaska:"AK",arizona:"AZ",arkansas:"AR",california:"CA",colorado:"CO",
+  connecticut:"CT",delaware:"DE","district of columbia":"DC",florida:"FL",georgia:"GA",hawaii:"HI",
+  idaho:"ID",illinois:"IL",indiana:"IN",iowa:"IA",kansas:"KS",kentucky:"KY",louisiana:"LA",maine:"ME",
+  maryland:"MD",massachusetts:"MA",michigan:"MI",minnesota:"MN",mississippi:"MS",missouri:"MO",
+  montana:"MT",nebraska:"NE",nevada:"NV","new hampshire":"NH","new jersey":"NJ","new mexico":"NM",
+  "new york":"NY","north carolina":"NC","north dakota":"ND",ohio:"OH",oklahoma:"OK",oregon:"OR",
+  pennsylvania:"PA","rhode island":"RI","south carolina":"SC","south dakota":"SD",tennessee:"TN",
+  texas:"TX",utah:"UT",vermont:"VT",virginia:"VA",washington:"WA","west virginia":"WV",wisconsin:"WI",wyoming:"WY"};
+  function mapState(raw){
+    const s=collapse(raw); const low=s.toLowerCase();
+    if(STATES[low]) return STATES[low];
+    if(/^[a-z]{2}$/i.test(s)) return s.toUpperCase();
+    return s;
+  }
+  function fmtPhone(raw){ const d=(raw||"").replace(/\D/g,"").slice(0,10); return d.length===10?`(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`:collapse(raw); }
+  function fmtZip(raw){ let d=(raw||"").replace(/\D/g,"").slice(0,9); if(d.length>5) d=d.slice(0,5)+"-"+d.slice(5); return d||collapse(raw); }
+  const MONTHS={jan:"01",feb:"02",mar:"03",apr:"04",may:"05",jun:"06",jul:"07",aug:"08",sep:"09",sept:"09",oct:"10",nov:"11",dec:"12",
+  january:"01",february:"02",march:"03",april:"04",june:"06",july:"07",august:"08",september:"09",october:"10",november:"11",december:"12"};
+  function parseDate(raw){
+    const s=collapse(raw).toLowerCase(); if(!s) return "";
+    if(/present|current|now|ongoing/.test(s)) return "Present";
+    let m=s.match(/\b(1[0-2]|0?[1-9])[\/\-.](\d{4}|\d{2})\b/);
+    if(m){ let mo=m[1].padStart(2,"0"), y=m[2]; if(y.length===2) y=(+y>50?"19":"20")+y; return mo+"/"+y; }
+    const y=s.match(/\b(19|20)\d{2}\b/);
+    const mon=Object.keys(MONTHS).find(k=>new RegExp("\\b"+k).test(s));
+    if(mon && y) return MONTHS[mon]+"/"+y[0];
+    if(y) return y[0];
+    return collapse(raw);
+  }
+  function esc(s){ const d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
+  function saveBlob(blob,name){ const a=document.createElement("a"); const url=URL.createObjectURL(blob);
+    a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1500); }
+
+  /* ---- file load → plain text ---- */
+  $("#gPick").addEventListener("click",()=>$("#gFile").click());
+  $("#gFile").addEventListener("change",e=>{ if(e.target.files[0]) loadFile(e.target.files[0]); });
+  async function loadFile(file){
+    const ext=file.name.split(".").pop().toLowerCase();
+    try{
+      let text="";
+      if(ext==="txt") text=await file.text();
+      else if(ext==="docx"){ const buf=await file.arrayBuffer(); const r=await mammoth.extractRawText({arrayBuffer:buf}); text=r.value; }
+      else if(ext==="pdf") text=await pdfToText(await file.arrayBuffer());
+      else { alert("Use .pdf, .docx, or .txt"); return; }
+      if(!collapse(text)){ alert("Couldn't read any text from that file. If it's a scanned PDF there's no selectable text."); return; }
+      startGuide(text);
+    }catch(err){ alert("Could not read that file: "+((err&&err.message)||err)); }
+  }
+  async function pdfToText(buf){
+    const pdf=await pdfjsLib.getDocument({data:buf}).promise;
+    const out=[];
+    for(let n=1;n<=pdf.numPages;n++){
+      const page=await pdf.getPage(n); const tc=await page.getTextContent();
+      const rows=[]; const TOL=4;
+      for(const it of tc.items){ if(!it.str) continue; const x=it.transform[4],y=it.transform[5];
+        let row=rows.find(r=>Math.abs(r.y-y)<=TOL); if(!row){ row={y,items:[]}; rows.push(row);} row.items.push({x,w:it.width||0,str:it.str}); }
+      rows.sort((a,b)=>b.y-a.y);
+      for(const r of rows){ r.items.sort((a,b)=>a.x-b.x); let line="",pe=null;
+        for(const it of r.items){ if(pe!==null && it.x-pe>1) line+=" "; line+=it.str; pe=it.x+it.w; }
+        line=line.replace(/[ \t]{2,}/g," ").trim(); if(line) out.push(line); }
+      out.push("");
+    }
+    return out.join("\n").replace(/\n{3,}/g,"\n\n").trim();
+  }
+
+  /* ---- tokenize into tappable words ---- */
+  let tokens=[];
+  function tokenize(text){
+    const wrap=$("#gResume"); wrap.innerHTML=""; tokens=[];
+    text.split(/\r?\n/).forEach((line,li)=>{
+      const div=document.createElement("div"); div.className="rline";
+      const words=line.split(/\s+/).filter(Boolean);
+      if(!words.length){ div.classList.add("blank"); div.innerHTML="&nbsp;"; wrap.appendChild(div); return; }
+      words.forEach(w=>{
+        const gi=tokens.length;
+        const span=document.createElement("span"); span.className="tok"; span.textContent=w;
+        span.addEventListener("click",()=>tap(gi));
+        tokens.push({gi,li,text:w,el:span});
+        div.appendChild(span); div.appendChild(document.createTextNode(" "));
+      });
+      wrap.appendChild(div);
+    });
+  }
+
+  /* ---- tap-the-words selection ---- */
+  let anchor=null, focusI=null, rangeDone=false;
+  function resetSel(){ anchor=focusI=null; rangeDone=false; paintSel(); refreshUse(); }
+  function tap(gi){
+    if(anchor===null || rangeDone){ anchor=gi; focusI=gi; rangeDone=false; }
+    else { focusI=gi; rangeDone=true; }
+    paintSel(); refreshUse();
+  }
+  function selRange(){ if(anchor===null) return null; return [Math.min(anchor,focusI),Math.max(anchor,focusI)]; }
+  function paintSel(){
+    const r=selRange();
+    tokens.forEach(t=>{ t.el.classList.remove("sel","end"); });
+    if(!r) return;
+    for(let i=r[0];i<=r[1];i++) tokens[i].el.classList.add("sel");
+    tokens[r[1]].el.classList.add("end");
+  }
+  function selText(){
+    const r=selRange(); if(!r) return "";
+    let out="",lastLi=null;
+    for(let i=r[0];i<=r[1];i++){ const t=tokens[i]; if(lastLi!==null) out+=(t.li!==lastLi?"\n":" "); out+=t.text; lastLi=t.li; }
+    return out;
+  }
+  function markDone(){ const r=selRange(); if(!r) return; for(let i=r[0];i<=r[1];i++) tokens[i].el.classList.add("done"); }
+  function refreshUse(){
+    const has=anchor!==null;
+    $("#gUse").disabled=!has;
+    $("#gCap").innerHTML = has ? ("Selected: <b>"+esc(collapse(selText()))+"</b>") : "Tap a word to start; tap another to select the words in between.";
+  }
+
+  /* ---- wizard engine ---- */
+  const S={ fields:{}, jobs:[], edu:{}, skills:"" };
+  let queue=[], qi=-1, eduQueued=false;
+
+  function capStep(o){ return Object.assign({kind:"capture", optional:false, transform:collapse, bulk:false}, o); }
+  function decision(o){ return Object.assign({kind:"decision"}, o); }
+
+  function contactSteps(){ return [
+    capStep({key:"fn", q:"Tap your FIRST name", apply:v=>S.fields.fn=collapse(v)}),
+    capStep({key:"ln", q:"Tap your LAST name", apply:v=>S.fields.ln=collapse(v)}),
+    capStep({key:"addr", addrMulti:true, q:"Tap your STREET address only", sub:"Tap just the number and street (we ask city, state, ZIP next). Not on your resume? Tap “Type it in” to enter your whole address at once.", ph:"Street only, e.g. 123 Example Street", optional:true, apply:v=>S.fields.addr=collapse(v).replace(/,.*$/,"").trim()}),
+    capStep({key:"city", q:"Tap your CITY", sub:"City name only.", ph:"City only, e.g. Anytown", optional:true, apply:v=>S.fields.city=collapse(v).replace(/,.*$/,"").trim()}),
+    capStep({key:"state", q:"Tap your STATE", sub:"We turn a full state name into its 2-letter code (California becomes CA).", ph:"State, e.g. California or CA", optional:true, transform:mapState, apply:v=>S.fields.state=mapState(v)}),
+    capStep({key:"zip", q:"Tap your ZIP / postal code", ph:"ZIP, e.g. 12345", optional:true, transform:fmtZip, apply:v=>S.fields.zip=fmtZip(v)}),
+    capStep({key:"email", q:"Tap your EMAIL address", ph:"e.g. you@example.com", optional:true, apply:v=>S.fields.email=collapse(v)}),
+    capStep({key:"phone", q:"Tap your PHONE number", ph:"e.g. (555) 555-0100", optional:true, transform:fmtPhone, apply:v=>S.fields.phone=fmtPhone(v)}),
+  ]; }
+  function jobSteps(i){ const n=i+1; S.jobs[i]=S.jobs[i]||{}; const J=S.jobs[i]; return [
+    capStep({key:"jt"+i, q:`Job ${n}: tap the JOB TITLE`, apply:v=>J.title=collapse(v)}),
+    capStep({key:"jc"+i, q:`Job ${n}: tap the COMPANY`, apply:v=>J.company=collapse(v)}),
+    capStep({key:"jl"+i, q:`Job ${n}: tap the LOCATION (city, state)`, optional:true, apply:v=>J.loc=collapse(v)}),
+    capStep({key:"jf"+i, q:`Job ${n}: tap the START date (month & year)`, optional:true, transform:parseDate, apply:v=>J.from=parseDate(v)}),
+    capStep({key:"jto"+i, q:`Job ${n}: tap the END date (or the word "Present")`, optional:true, transform:parseDate, apply:v=>J.to=parseDate(v)}),
+    capStep({key:"jb"+i, q:`Job ${n}: tap the FIRST word of the bullet points, then the LAST word`, optional:true, bulk:true,
+      apply:v=>J.bullets=normalizeBullets(v)}),
+    decision({key:"more"+i, q:`Add another job?`, yes:"Add another job", no:"No, that's all my jobs",
+      onYes:()=>splice(jobSteps(i+1)), onNo:()=>queueEnd()}),
+  ]; }
+  function eduSteps(){ return [
+    capStep({key:"school", q:"Tap your SCHOOL / university name (or type it)", optional:true, apply:v=>S.edu.school=collapse(v)}),
+    capStep({key:"deg", q:"Tap your DEGREE (we keep it exactly as written)", optional:true, apply:v=>S.edu.degree=collapse(v)}),
+    capStep({key:"fos", q:"Tap your FIELD OF STUDY", optional:true, apply:v=>S.edu.field=collapse(v)}),
+    capStep({key:"ef", q:"Education: tap the START date", optional:true, transform:parseDate, apply:v=>S.edu.from=parseDate(v)}),
+    capStep({key:"et", q:"Education: tap the END date (or 'Present')", optional:true, transform:parseDate, apply:v=>S.edu.to=parseDate(v)}),
+    capStep({key:"gpa", q:"Tap your GPA", optional:true, apply:v=>S.edu.gpa=collapse(v)}),
+  ]; }
+  function skillsStep(){ return [
+    capStep({key:"skills", q:"Tap the FIRST word of your skills list, then the LAST word", optional:true, bulk:true,
+      apply:v=>S.skills=cleanSkills(v)}),
+  ]; }
+  function splice(steps){ queue.splice(qi+1,0,...steps); }
+  function queueEnd(){
+    if(eduQueued) return;
+    eduQueued=true;
+    splice([ decision({key:"addedu", q:"Add your education?", yes:"Yes, add education", no:"Skip education",
+        onYes:()=>splice(eduSteps().concat(skillsQ())), onNo:()=>splice(skillsQ()) }) ]);
+  }
+  function skillsQ(){ return [ decision({key:"addskills", q:"Add your skills?", yes:"Yes, add skills", no:"Skip skills",
+      onYes:()=>splice(skillsStep()), onNo:()=>[] }) ]; }
+
+  function startGuide(text){
+    S.fields={}; S.jobs=[]; S.edu={}; S.skills=""; eduQueued=false;
+    tokenize(text);
+    queue = contactSteps().concat(jobSteps(0));
+    qi=-1;
+    setScreen("guide");
+    next();
+  }
+  function step(){ return queue[qi]; }
+  function next(){ qi++; if(qi>=queue.length){ finish(); return; } render(); }
+  let decBtns=[];
+  function addDecisionBtn(label,fn,ghost){ const b=document.createElement("button"); b.className="gbtn"+(ghost?" ghost":""); b.textContent=label; b.addEventListener("click",fn); $("#gPrompt .row").appendChild(b); decBtns.push(b); }
+  function clearDecisionBtns(){ decBtns.forEach(b=>b.remove()); decBtns=[]; }
+  function render(){
+    const st=step(); resetSel(); setPasting(false);
+    const cap=st.kind==="decision";
+    $("#gKicker").textContent = cap ? "Question" : (st.optional? "Optional" : "Required");
+    $("#gQ").textContent = typeof st.q==="function"? st.q() : st.q;
+    $("#gSub").textContent = st.sub || "";
+    $("#gPasteBox").placeholder = st.ph || "Type or paste it here…";
+    $("#gUse").style.display   = cap? "none":"";
+    $("#gPasteBtn").style.display = cap? "none":"";
+    $("#gSkip").style.display  = (cap||!st.optional)? "none":"";
+    $("#gBack").style.display  = qi>0? "":"none";
+    clearDecisionBtns();
+    if(cap){
+      $("#gCap").textContent="";
+      addDecisionBtn(st.yes, ()=>{ clearDecisionBtns(); st.onYes&&st.onYes(); next(); });
+      addDecisionBtn(st.no,  ()=>{ clearDecisionBtns(); st.onNo&&st.onNo();  next(); }, true);
+    }
+    renderFormView();
+  }
+
+  function commit(raw){ const st=step(); markDone(); st.apply(raw); next(); }
+  $("#gUse").addEventListener("click",()=>{ if(anchor===null) return; commit(selText()); });
+  function clearStep(st){ if(st && st.kind!=="decision" && st.apply) st.apply(""); }
+  $("#gSkip").addEventListener("click",()=>{ clearStep(step()); next(); });
+  $("#gBack").addEventListener("click",()=>{
+    const target = qi-1;
+    if(target<0) return;
+    clearStep(queue[target]);
+    qi = target-1; next();
+  });
+  function setPasting(on){
+    const st=step();
+    const isAddr = on && !!st.addrMulti;
+    $("#gPasteBox").style.display = (on && !isAddr) ? "block" : "none";
+    $("#gUsePaste").style.display = (on && !isAddr) ? "" : "none";
+    $("#gAddrGrid").style.display = isAddr ? "flex" : "none";
+    $("#gPasteBtn").style.display = (on || st.kind==="decision") ? "none" : "";
+    if(on){
+      if(isAddr){ ["gaAddr","gaCity","gaState","gaZip"].forEach(id=>{ $("#"+id).value=""; }); refreshAddrBtn(); $("#gaAddr").focus(); }
+      else { $("#gPasteBox").value=""; refreshPasteBtn(); $("#gPasteBox").focus(); }
+    }
+  }
+  function refreshPasteBtn(){ const v=$("#gPasteBox").value.trim(); const b=$("#gUsePaste"); b.disabled=!v; b.classList.toggle("ok", !!v); }
+  function refreshAddrBtn(){ const any=["gaAddr","gaCity","gaState","gaZip"].some(id=>$("#"+id).value.trim()); const b=$("#gUseAddr"); b.disabled=!any; b.classList.toggle("ok", !!any); }
+  $("#gPasteBtn").addEventListener("click",()=>setPasting(true));
+  $("#gPasteBox").addEventListener("input",refreshPasteBtn);
+  $("#gUsePaste").addEventListener("click",()=>{ const v=$("#gPasteBox").value; if(collapse(v)) commit(v); });
+  ["gaAddr","gaCity","gaState","gaZip"].forEach(id=>$("#"+id).addEventListener("input",refreshAddrBtn));
+  $("#gUseAddr").addEventListener("click",()=>{
+    const a=$("#gaAddr").value,c=$("#gaCity").value,s=$("#gaState").value,z=$("#gaZip").value;
+    if(!(collapse(a)||collapse(c)||collapse(s)||collapse(z))) return;
+    markDone();
+    S.fields.addr = collapse(a).replace(/,.*$/,"").trim();
+    S.fields.city = collapse(c).replace(/,.*$/,"").trim();
+    S.fields.state = mapState(s);
+    S.fields.zip  = fmtZip(z);
+    const zi = queue.findIndex(x=>x.key==="zip");
+    if(zi>=0) qi = zi;
+    next();
+  });
+  $("#gBuildNow").addEventListener("click",finish);
+
+  /* ---- live form view ---- */
+  function line(lab,val){ return val? `<div class="fv-line"><span class="lab">${lab}:</span> ${esc(val)}</div>` : ""; }
+  function renderFormView(){
+    const F=S.fields; let h="";
+    h+='<div class="fv-grp"><div class="t">My Information</div>';
+    h+=line("First Name",F.fn)+line("Last Name",F.ln)+line("Address",F.addr)+line("City",F.city)+line("State",F.state)+line("Postal Code",F.zip)+line("Email",F.email)+line("Phone",F.phone);
+    if(!(F.fn||F.ln)) h+='<div class="fv-empty">nothing yet</div>';
+    h+='</div>';
+    S.jobs.forEach((J,i)=>{ if(!J||!(J.title||J.company||J.bullets)) return;
+      h+=`<div class="fv-grp"><div class="t">Work Experience ${i+1}</div>`;
+      h+=line("Job Title",J.title)+line("Company",J.company)+line("Location",J.loc)+line("From",J.from)+line("To",J.to);
+      if(J.bullets&&J.bullets.length) h+=`<div class="fv-line">${J.bullets.map(esc).join("<br>")}</div>`;
+      h+='</div>';
+    });
+    if(S.edu&&(S.edu.school||S.edu.degree)){ h+='<div class="fv-grp"><div class="t">Education</div>';
+      h+=line("School",S.edu.school)+line("Degree",S.edu.degree)+line("Field of Study",S.edu.field)+line("From",S.edu.from)+line("To",S.edu.to)+line("GPA",S.edu.gpa)+'</div>'; }
+    if(S.skills){ h+=`<div class="fv-grp"><div class="t">Skills</div><div class="fv-line">${esc(S.skills)}</div></div>`; }
+    $("#gFv").innerHTML=h;
+  }
+
+  /* ---- render THE FORMAT + export ---- */
+  function buildText(){
+    const F=S.fields; const L=[];
+    L.push("My Information");
+    if(F.fn) L.push("First Name: "+F.fn);
+    if(F.ln) L.push("Last Name: "+F.ln);
+    if(F.addr) L.push("Address Line 1: "+F.addr);
+    if(F.city) L.push("City: "+F.city);
+    if(F.state) L.push("State: "+F.state);
+    if(F.zip) L.push("Postal Code: "+F.zip);
+    if(F.email) L.push("Email Address: "+F.email);
+    if(F.phone) L.push("Phone Number: "+F.phone);
+    const realJobs=S.jobs.filter(J=>J&&(J.title||J.company));
+    if(realJobs.length){ L.push(""); L.push("Work Experience");
+      realJobs.forEach((J,i)=>{ L.push("Work Experience "+(i+1));
+        if(J.title) L.push("Job Title: "+J.title);
+        if(J.company) L.push("Company: "+J.company);
+        if(J.loc) L.push("Location: "+J.loc);
+        if(J.from) L.push("From: "+J.from);
+        if(J.to) L.push("To: "+J.to);
+        (J.bullets||[]).forEach(b=>L.push(b));
+        L.push("");
+      });
+      if(L[L.length-1]==="") L.pop();
+    }
+    if(S.edu&&(S.edu.school||S.edu.degree||S.edu.field)){ L.push(""); L.push("Education"); L.push("Education 1");
+      if(S.edu.school) L.push("School or University: "+S.edu.school);
+      if(S.edu.degree) L.push("Degree: "+S.edu.degree);
+      if(S.edu.field) L.push("Field of Study: "+S.edu.field);
+      if(S.edu.from) L.push("From: "+S.edu.from);
+      if(S.edu.to) L.push("To: "+S.edu.to);
+      if(S.edu.gpa) L.push("GPA: "+S.edu.gpa);
+    }
+    if(S.skills){ L.push(""); L.push("Skills"); L.push(S.skills); }
+    return L.join("\n");
+  }
+  function finish(){ $("#gOut").value=buildText(); setScreen("out"); }
+  $("#gDlDocx").addEventListener("click",()=>{ const text=$("#gOut").value; if(!text) return;
+    if(window.__wrfBuildDocx){ window.__wrfBuildDocx(text).then(b=>saveBlob(b,"workday-safe-resume.docx")); }
+    else { alert("Export unavailable on this page."); } });
+  $("#gCopy").addEventListener("click",async()=>{ try{ await navigator.clipboard.writeText($("#gOut").value); $("#gCopy").textContent="Copied!"; setTimeout(()=>$("#gCopy").textContent="Copy",1200);}catch(e){ $("#gOut").select(); document.execCommand&&document.execCommand("copy"); } });
+  $("#gRestart").addEventListener("click",()=>{ setScreen("upload"); $("#gFile").value=""; });
 })();
 </script>
 </body>
